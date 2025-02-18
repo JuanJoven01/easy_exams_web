@@ -1,26 +1,34 @@
 import axios from "axios";
 
 
-const loginAPI = async  (email, code) => { 
+const loginAPI = async  (email, password) => { 
 
-    try {        
+    try {      
         const response = await axios({
             method: 'post',
-            url: '/api/easy_apps/users/validate_code',
+            url: '/api/easy_apps/exams/auth',
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
                 params: {
-                    email: email,
-                    code: code
+                    login: email,
+                    password: password
                     },
                 id: new Date().getTime(), // unique id for the request
                 }
         })
-        return response.data.result
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
     } catch (e) {
         return {
-            'error': 'Error on request',
+            'status': 'error',
             'message' : e.message
         }
     }

@@ -11,16 +11,18 @@ export const GlobalProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(false)
 
+    const [isLogged, setIsLogged] = useState(false)
+
     return (
         <GlobalContext.Provider value={{ 
                     modal, 
                     setModal,
                     isLoading,
-                    setIsLoading
+                    setIsLoading,
+                    isLogged,
+                    setIsLogged
                 }}>
-
             {children}
-
         </GlobalContext.Provider>
     );
     };
