@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import { FiEdit } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
+import { FaRegObjectUngroup } from "react-icons/fa";
 
 
 const CoursesViewer = ({data}) => {
@@ -52,30 +53,47 @@ const CoursesViewer = ({data}) => {
                 ) : (
                     data.map((item) => {
                         return(
-                            <div key={item.id}
-                                className='flex justify-between'
+                            <details key={item.id}
+                                className='my-2 font-thin text-xl text-slate-400 font-satoshi-lightitalic'
+                                name='Accordion Group'
                                 >
-                                <p className="text-center py-2 px-2 text-xl font-thin text-slate-400 font-satoshi-lightitalic">
-                                    Name: {item.name}
-                                </p>
-                                <p className="text-center py-2 px-2 text-xl font-thin text-slate-400 font-satoshi-lightitalic">
-                                    Description: {item.description}
-                                </p>
-                                <p className="text-center py-2 px-2 text-xl font-thin text-slate-400 font-satoshi-lightitalic">
-                                    Code: {item.code}
-                                </p>
-                                <p className="text-center py-2 px-2 text-xl font-thin text-slate-400 font-satoshi-lightitalic">
-                                    Access Key: {item.access_key}
-                                </p>
-                                <FiEdit className="h-6 w-6  text-cyan-400"/>
-                                <FiDelete className="h-6 w-6  text-amber-600"/>
-
-                            </div>
+                                    <summary className='mb-2 border-2 rounded-md flex justify-between'>
+                                        <p className="py-2 pl-10 ">
+                                            <span className="text-slate-300 font-bold">Name: </span> {item.name}
+                                        </p>
+                                        
+                                        <div className='flex pr-10 items-center'>
+                                            <FaRegObjectUngroup  className="h-6 w-6  text-cyan-400 mx-3 " />
+                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3"/>
+                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3"/>
+                                        </div>
+                                    </summary>
+                                    <div>
+                                        <div className='  '>
+                                            <div className=' mb-2 flex justify-around'>
+                                                <p className="py-2">
+                                                <span className="text-slate-300 font-bold">Code: </span> {item.code}
+                                                </p>
+                                                <p className="py-2">
+                                                    <span className="text-slate-300 font-bold">Access Key:  </span> {item.access_key}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className='mb-2'>
+                                            <p className=" py-2 px-5 ">
+                                                <span className="text-slate-300 font-bold">Description:  </span> {item.description == '' ? "The course haven't a description yet." : item.description}
+                                            </p>
+                                        </div>
+                                        
+                                    </div>
+                            </details>
                         )
                         
                     })
                     
                 )
+
+                
                 }
             </div>
         </section>
