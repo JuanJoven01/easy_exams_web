@@ -86,7 +86,7 @@ const AddUserToCourseComponent = ({setAddUserModal}) => {
                 <div className="mb-10 mx-5 group relative w-96 overflow-hidden rounded-2xl bg-gray-300 p-1 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-500 hover:via-slate-200 hover:to-charlie">
                     <div className="group-hover:animate-spin-slow invisible absolute -top-40 -bottom-40 left-10 right-10 bg-gradient-to-r from-transparent via-white/90 to-transparent group-hover:visible " ></div>
                     <div className="relative rounded-xl bg-slate-800 p-6">
-                    <h2 className="text-center text-2xl font-bold text-white mb-6">{formData.type}</h2>
+                    <h2 className="text-center text-2xl font-bold text-white mb-6">Insert Code and Access Key To Add An Existent Course</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
