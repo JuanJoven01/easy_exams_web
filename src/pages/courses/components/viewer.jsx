@@ -34,6 +34,16 @@ const CoursesViewer = ({data}) => {
         id : ''
     })
 
+    const [openModal, setOpenModal] = useState('')
+
+    const openTheModal = (id) => {
+        if (openModal == id){
+            setOpenModal('')
+        } else{
+            setOpenModal(id)
+        }
+    }
+
     return (
         <section className="text-slate-300 mt-0 flex-col font-satoshi-blackitalic w-full">
             {
@@ -79,11 +89,15 @@ const CoursesViewer = ({data}) => {
                 ) : (
                     data.map((item) => {
                         return(
-                            <details key={item.id}
+                            <div key={item.id}
                                 className='my-2 font-thin text-xl text-slate-400 font-satoshi-lightitalic'
-                                name='Accordion Group'
                                 >
-                                    <summary className='mb-2 border-2 rounded-md flex justify-between hover:cursor-pointer hover:bg-slate-800'>
+                                    <div className='mb-2 border-2 rounded-md flex justify-between hover:cursor-pointer hover:bg-slate-800' 
+                                        onClick={(event)=>{
+                                            event.preventDefault()
+                                            event.stopPropagation()
+                                            openTheModal(item.id)
+                                        }}>
                                         <p className="py-2 pl-10 ">
                                             <span className="text-slate-300 font-bold">Name: </span> {item.name}
                                         </p>
@@ -92,15 +106,17 @@ const CoursesViewer = ({data}) => {
                                             <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="courses" data-tooltip-content="Go To Course Exams" />
                                             <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="courses" data-tooltip-content="Edit Course" 
                                                 onClick={(event) => {
-                                                event.stopPropagation();
-                                                editCourseHandler(item);
+                                                event.stopPropagation()
+                                                editCourseHandler(item)
                                                 }}
                                             />
                                             <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"/>
                                             <ReactTooltip id='courses' place="top" type="dark" effect="solid" />
                                         </div>
-                                    </summary>
-                                    <div className=' border-x-2 border-b-2 rounded-md'>
+                                    </div>
+                                    {
+                                        openModal == item.id &&
+                                        <div className=' border-x-2 border-b-2 rounded-md'>
                                         <div className='  '>
                                             <div className=' mb-2 flex justify-around'>
                                                 <p className="py-2">
@@ -118,7 +134,8 @@ const CoursesViewer = ({data}) => {
                                         </div>
                                         
                                     </div>
-                            </details>
+                                    }
+                            </div>
                         )
                         
                     })
