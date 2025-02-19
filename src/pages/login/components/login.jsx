@@ -33,6 +33,7 @@ const LoginComponent = () => {
                 'isError' : true,
                 'message' : `The Password Must  Unless 8 Characters`,
             })
+            return true
         }
     };
 
@@ -52,7 +53,9 @@ const LoginComponent = () => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-        validateData();
+        if (validateData()){
+            return
+        }
         setIsLoading(true)
         
         // Process form data

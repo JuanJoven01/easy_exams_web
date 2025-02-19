@@ -32,6 +32,6 @@ const loginAPI = async  (email, password) => {
             'message' : e.message
         }
     }
-}
+} 
 
 export default loginAPI

@@ -11,7 +11,6 @@ const Navbar = () => {
 
     useEffect(()=>{
         const loginInfo = JSON.parse(localStorage.getItem('easyAppsLogin')) 
-        console.log(loginInfo, 'Navbar')
         if (loginInfo){
             setIsLogged(true)
         }
@@ -48,6 +47,10 @@ const Navbar = () => {
                     <p className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} onClick={removesLogin} href="login">
                         Logout
                     </p>
+
+                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="courses">
+                        Go To Courses
+                    </a>
                 
                     <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="" >
                         Go To Easy Apps
