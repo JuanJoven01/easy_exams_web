@@ -45,7 +45,6 @@ const createCourseAPI = async  (name, description, token) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-        console.log(response, 'response create')
         if (response.data.result){
             return response.data.result
         }else {
@@ -64,10 +63,9 @@ const createCourseAPI = async  (name, description, token) => {
 } 
 
 const updateCourseAPI = async  (name, description,courseId, token) => { 
-
     try {      
         const response = await axios({
-            method: 'post',
+            method: 'put',
             url: '/api/exams/courses/update/',
             data: {
                 jsonrpc: '2.0',
@@ -83,7 +81,6 @@ const updateCourseAPI = async  (name, description,courseId, token) => {
             'Authorization': `Bearer ${token}`
         }
         })
-        console.log(response, 'response update')
         if (response.data.result){
             return response.data.result
         }else {

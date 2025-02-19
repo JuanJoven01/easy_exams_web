@@ -11,22 +11,48 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const CoursesViewer = ({data}) => {
 
-    const [isCourseEditor, setIsCourseEditor] = useState(false)
+    const [isCourseCreator, setIsCourseCreator] = useState(false)
 
     const createCourseHandler = () => {
+        setIsCourseCreator(true)
+    }
+
+    const [isCourseEditor, setIsCourseEditor] = useState(false)
+
+    const editCourseHandler = (item) => {
+        setCourseToEditData({
+            name : item.name, 
+            description: item.description, 
+            id : item.id
+        })
         setIsCourseEditor(true)
     }
 
-    console.log(data)
+    const [courseToEditData, setCourseToEditData] = useState({
+        name : '', 
+        description: '', 
+        id : ''
+    })
 
     return (
         <section className="text-slate-300 mt-0 flex-col font-satoshi-blackitalic w-full">
             {
-                isCourseEditor &&
+                isCourseCreator &&
                 <CourseCreatorComponent 
                     type={'creator'}
                     name={''}
                     description={''}
+                    setIsCourseEditor= {setIsCourseCreator}
+                />
+            }
+
+            {
+                isCourseEditor &&
+                <CourseCreatorComponent 
+                    type={'editor'}
+                    name={courseToEditData.name}
+                    description={courseToEditData.description}
+                    courseId={courseToEditData.id}
                     setIsCourseEditor= {setIsCourseEditor}
                 />
             }
@@ -64,12 +90,17 @@ const CoursesViewer = ({data}) => {
                                         
                                         <div className='flex pr-10 items-center'>
                                             <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="courses" data-tooltip-content="Go To Course Exams" />
-                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="courses" data-tooltip-content="Edit Course"/>
+                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="courses" data-tooltip-content="Edit Course" 
+                                                onClick={(event) => {
+                                                event.stopPropagation();
+                                                editCourseHandler(item);
+                                                }}
+                                            />
                                             <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"/>
                                             <ReactTooltip id='courses' place="top" type="dark" effect="solid" />
                                         </div>
                                     </summary>
-                                    <div className=' border-x-2 border-b-2'>
+                                    <div className=' border-x-2 border-b-2 rounded-md'>
                                         <div className='  '>
                                             <div className=' mb-2 flex justify-around'>
                                                 <p className="py-2">

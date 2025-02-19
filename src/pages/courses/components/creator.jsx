@@ -12,6 +12,7 @@ const CourseCreatorComponent = ({type, name, description, setIsCourseEditor, cou
     const jsonInfo = JSON.parse(authInfo)
     const token = jsonInfo.token
 
+
     // State to manage form data
     const [formData, setFormData] = useState({
         rawType: type,
@@ -59,7 +60,6 @@ const CourseCreatorComponent = ({type, name, description, setIsCourseEditor, cou
         setIsLoading(true)
         if (formData.rawType == 'creator'){
             // Process form data
-            console.log('before call api to create')
             const response   =  await createCourseAPI(
                 formData.name,
                 formData.description,
@@ -87,7 +87,6 @@ const CourseCreatorComponent = ({type, name, description, setIsCourseEditor, cou
                 formData.courseId,
                 token
             )
-            console.log(response)
             if (response['status'] == 'error') {
                 setModal({
                     'isOpen' : true,
@@ -113,7 +112,7 @@ const CourseCreatorComponent = ({type, name, description, setIsCourseEditor, cou
                 <div className="mb-10 mx-5 group relative w-96 overflow-hidden rounded-2xl bg-gray-300 p-1 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-500 hover:via-slate-200 hover:to-charlie">
                     <div className="group-hover:animate-spin-slow invisible absolute -top-40 -bottom-40 left-10 right-10 bg-gradient-to-r from-transparent via-white/90 to-transparent group-hover:visible " ></div>
                     <div className="relative rounded-xl bg-slate-800 p-6">
-                    <h2 className="text-center text-2xl font-bold text-white mb-6">Create Course</h2>
+                    <h2 className="text-center text-2xl font-bold text-white mb-6">{formData.type}</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
