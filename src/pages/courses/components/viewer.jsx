@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import CustomButton from "../../../components/buttons"
 import CourseCreatorComponent from './creator';
+import CourseEliminatorComponent from './eliminator';
 import { useState } from 'react';
 
 import { FiEdit } from "react-icons/fi";
@@ -19,6 +20,12 @@ const CoursesViewer = ({data}) => {
 
     const [isCourseEditor, setIsCourseEditor] = useState(false)
 
+    const [courseToEditData, setCourseToEditData] = useState({
+        name : '', 
+        description: '', 
+        id : ''
+    })
+
     const editCourseHandler = (item) => {
         setCourseToEditData({
             name : item.name, 
@@ -28,11 +35,20 @@ const CoursesViewer = ({data}) => {
         setIsCourseEditor(true)
     }
 
-    const [courseToEditData, setCourseToEditData] = useState({
-        name : '', 
-        description: '', 
+    const [isCourseEliminator, setIsCourseEliminator] = useState(false)
+
+    const [courseToRemovesData, setCourseToRemovesData] = useState({
+        name : '',
         id : ''
     })
+
+    const removesCourseHandler = (item) => {
+        setCourseToRemovesData({
+            name : item.name,
+            id : item.id
+        })
+        setIsCourseEliminator(true)
+    }
 
     const [openModal, setOpenModal] = useState('')
 
@@ -64,6 +80,15 @@ const CoursesViewer = ({data}) => {
                     description={courseToEditData.description}
                     courseId={courseToEditData.id}
                     setIsCourseEditor= {setIsCourseEditor}
+                />
+            }
+
+            {
+                isCourseEliminator &&
+                <CourseEliminatorComponent 
+                    name={courseToRemovesData.name}
+                    courseId= {courseToRemovesData.id}
+                    setIsCourseEliminator={setIsCourseEliminator}
                 />
             }
             <div className="flex justify-center w-full">
@@ -110,30 +135,35 @@ const CoursesViewer = ({data}) => {
                                                 editCourseHandler(item)
                                                 }}
                                             />
-                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"/>
+                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"
+                                                onClick={(event) => {
+                                                    event.stopPropagation()
+                                                    removesCourseHandler(item)
+                                                    }}
+                                            />
                                             <ReactTooltip id='courses' place="top" type="dark" effect="solid" />
                                         </div>
                                     </div>
                                     {
                                         openModal == item.id &&
                                         <div className=' border-x-2 border-b-2 rounded-md'>
-                                        <div className='  '>
-                                            <div className=' mb-2 flex justify-around'>
-                                                <p className="py-2">
-                                                <span className="text-slate-300 font-bold">Code: </span> {item.code}
-                                                </p>
-                                                <p className="py-2">
-                                                    <span className="text-slate-300 font-bold">Access Key:  </span> {item.access_key}
+                                            <div className='  '>
+                                                <div className=' mb-2 flex justify-around'>
+                                                    <p className="py-2">
+                                                    <span className="text-slate-300 font-bold">Code: </span> {item.code}
+                                                    </p>
+                                                    <p className="py-2">
+                                                        <span className="text-slate-300 font-bold">Access Key:  </span> {item.access_key}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className='mb-2'>
+                                                <p className=" py-2 px-5 ">
+                                                    <span className="text-slate-300 font-bold">Description:  </span> {item.description == '' ? "The course haven't a description yet." : item.description}
                                                 </p>
                                             </div>
+                                            
                                         </div>
-                                        <div className='mb-2'>
-                                            <p className=" py-2 px-5 ">
-                                                <span className="text-slate-300 font-bold">Description:  </span> {item.description == '' ? "The course haven't a description yet." : item.description}
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
                                     }
                             </div>
                         )

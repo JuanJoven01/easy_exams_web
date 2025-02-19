@@ -98,5 +98,31 @@ const updateCourseAPI = async  (name, description,courseId, token) => {
     }
 } 
 
+const removesCourseAPI = async  (id, token) => { 
+    try {      
+        const response = await axios({
+            method: 'delete',
+            url: `/api/exams/courses/delete/${id}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if (response.data){
+            return response.data
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
 
-export {getCoursesAPI, createCourseAPI, updateCourseAPI}
+
+export {getCoursesAPI, createCourseAPI, updateCourseAPI, removesCourseAPI}

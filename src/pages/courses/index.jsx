@@ -29,6 +29,7 @@ const CoursesPage = () => {
                         'isError' : true,
                         'message' : coursesData.message,
                     })
+                    localStorage.removeItem('easyAppsLogin')
                     navigate('/')
                 }
                 setCourses(coursesData.data);
