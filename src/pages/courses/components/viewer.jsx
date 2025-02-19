@@ -57,7 +57,7 @@ const CoursesViewer = ({data}) => {
                                 className='my-2 font-thin text-xl text-slate-400 font-satoshi-lightitalic'
                                 name='Accordion Group'
                                 >
-                                    <summary className='mb-2 border-2 rounded-md flex justify-between'>
+                                    <summary className='mb-2 border-2 rounded-md flex justify-between hover:cursor-pointer hover:bg-slate-800'>
                                         <p className="py-2 pl-10 ">
                                             <span className="text-slate-300 font-bold">Name: </span> {item.name}
                                         </p>
@@ -68,7 +68,7 @@ const CoursesViewer = ({data}) => {
                                             <FiDelete className="h-6 w-6  text-amber-600 mx-3"/>
                                         </div>
                                     </summary>
-                                    <div>
+                                    <div className=' border-x-2 border-b-2'>
                                         <div className='  '>
                                             <div className=' mb-2 flex justify-around'>
                                                 <p className="py-2">
