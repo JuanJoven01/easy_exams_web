@@ -124,5 +124,39 @@ const removesCourseAPI = async  (id, token) => {
     }
 } 
 
+const addUserToCourseAPI = async  (code, accessKey, token) => { 
+    try {      
+        const response = await axios({
+            method: 'put',
+            url: '/api/exams/courses/update/add_user',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                params: {
+                    code: code,
+                    access_key: accessKey,
+                    },
+                id: new Date().getTime(), // unique id for the request
+                },
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
 
-export {getCoursesAPI, createCourseAPI, updateCourseAPI, removesCourseAPI}
+export {getCoursesAPI, createCourseAPI, updateCourseAPI, removesCourseAPI, addUserToCourseAPI}

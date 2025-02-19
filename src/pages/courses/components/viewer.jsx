@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CustomButton from "../../../components/buttons"
 import CourseCreatorComponent from './creator';
 import CourseEliminatorComponent from './eliminator';
+import AddUserToCourseComponent from './addUsers';
 import { useState } from 'react';
 
 import { FiEdit } from "react-icons/fi";
@@ -50,6 +51,12 @@ const CoursesViewer = ({data}) => {
         setIsCourseEliminator(true)
     }
 
+    const [isAddUserModal, setAddUserModal] = useState(false)
+
+    const addUserToCourseHandler = () => {
+        setAddUserModal(true)
+    }
+
     const [openModal, setOpenModal] = useState('')
 
     const openTheModal = (id) => {
@@ -91,10 +98,16 @@ const CoursesViewer = ({data}) => {
                     setIsCourseEliminator={setIsCourseEliminator}
                 />
             }
+            {
+                isAddUserModal &&
+                <AddUserToCourseComponent 
+                    setAddUserModal={setAddUserModal}
+                />
+            }
             <div className="flex justify-center w-full">
                 <CustomButton
                     text={'Add Existent Course'}
-                    action={createCourseHandler}
+                    action={addUserToCourseHandler}
                     
                 />
                 <CustomButton
