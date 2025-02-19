@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { FiEdit } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { FaRegObjectUngroup } from "react-icons/fa";
-
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const CoursesViewer = ({data}) => {
 
@@ -63,9 +63,10 @@ const CoursesViewer = ({data}) => {
                                         </p>
                                         
                                         <div className='flex pr-10 items-center'>
-                                            <FaRegObjectUngroup  className="h-6 w-6  text-cyan-400 mx-3 " />
-                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3"/>
-                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3"/>
+                                            <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="courses" data-tooltip-content="Go To Course Exams" />
+                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="courses" data-tooltip-content="Edit Course"/>
+                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"/>
+                                            <ReactTooltip id='courses' place="top" type="dark" effect="solid" />
                                         </div>
                                     </summary>
                                     <div className=' border-x-2 border-b-2'>
