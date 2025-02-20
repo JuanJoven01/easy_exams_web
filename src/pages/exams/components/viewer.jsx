@@ -1,64 +1,55 @@
 import PropTypes from 'prop-types';
 
 import CustomButton from "../../../components/buttons"
-import CourseCreatorComponent from './creator';
-import CourseEliminatorComponent from './eliminator';
-import AddUserToCourseComponent from './addUsers';
+import ExamCreatorComponent from './creator';
+// import ExamEliminatorComponent from './eliminator';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { FiEdit } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { FaRegObjectUngroup } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
-import { useNavigate } from 'react-router';
-
-const CoursesViewer = ({data}) => {
+const ExamsViewer = ({data, courseId}) => {
 
     const navigate = useNavigate()
 
-    const [isCourseCreator, setIsCourseCreator] = useState(false)
+    const [isExamCreator, setIsExamCreator] = useState(false)
 
-    const createCourseHandler = () => {
-        setIsCourseCreator(true)
+    const createExamHandler = () => {
+        setIsExamCreator(true)
     }
 
-    const [isCourseEditor, setIsCourseEditor] = useState(false)
 
-    const [courseToEditData, setCourseToEditData] = useState({
+    const [examToEditData, setExamToEditData] = useState({
         name : '', 
         description: '', 
         id : ''
     })
 
-    const editCourseHandler = (item) => {
-        setCourseToEditData({
+    const editExamHandler = (item) => {
+        setExamToEditData({
             name : item.name, 
             description: item.description, 
             id : item.id
         })
-        setIsCourseEditor(true)
+        setIsExamCreator(true)
     }
 
-    const [isCourseEliminator, setIsCourseEliminator] = useState(false)
+    const [isExamEliminator, setIsExamEliminator] = useState(false)
 
-    const [courseToRemovesData, setCourseToRemovesData] = useState({
+    const [examToRemovesData, setExamToRemovesData] = useState({
         name : '',
         id : ''
     })
 
-    const removesCourseHandler = (item) => {
-        setCourseToRemovesData({
+    const removesExamHandler = (item) => {
+        setExamToRemovesData({
             name : item.name,
             id : item.id
         })
-        setIsCourseEliminator(true)
-    }
-
-    const [isAddUserModal, setAddUserModal] = useState(false)
-
-    const addUserToCourseHandler = () => {
-        setAddUserModal(true)
+        setIsExamEliminator(true)
     }
 
     const [openModal, setOpenModal] = useState('')
@@ -74,59 +65,51 @@ const CoursesViewer = ({data}) => {
     return (
         <section className="text-slate-300 mt-0 flex-col font-satoshi-blackitalic w-full">
             {
-                isCourseCreator &&
-                <CourseCreatorComponent 
+                isExamCreator &&
+                <ExamCreatorComponent 
                     type={'creator'}
                     name={''}
                     description={''}
-                    setIsCourseEditor= {setIsCourseCreator}
+                    duration={0}
+                    isActive={false}
+                    setIsExamCreator= {setIsExamCreator}
+                    courseId = {courseId}
                 />
             }
 
-            {
-                isCourseEditor &&
-                <CourseCreatorComponent 
+            {/* {
+                isExamEditor &&
+                <ExamCreatorComponent 
                     type={'editor'}
-                    name={courseToEditData.name}
-                    description={courseToEditData.description}
-                    courseId={courseToEditData.id}
-                    setIsCourseEditor= {setIsCourseEditor}
+                    name={examToEditData.name}
+                    description={examToEditData.description}
+                    courseId={examToEditData.id}
+                    setIsExamCreator= {setIsExamCreator}
                 />
             }
 
             {
-                isCourseEliminator &&
-                <CourseEliminatorComponent 
-                    name={courseToRemovesData.name}
-                    courseId= {courseToRemovesData.id}
-                    setIsCourseEliminator={setIsCourseEliminator}
+                isExamEliminator &&
+                <ExamEliminatorComponent 
+                    name={examToRemovesData.name}
+                    courseId= {examToRemovesData.id}
+                    setIsCourseEliminator={setIsExamEliminator}
                 />
-            }
-            {
-                isAddUserModal &&
-                <AddUserToCourseComponent 
-                    setAddUserModal={setAddUserModal}
-                />
-            }
+            } */}
             <div className="flex justify-center w-full">
                 <CustomButton
-                    text={'Add Existent Course'}
-                    action={addUserToCourseHandler}
-                    
-                />
-                <CustomButton
-                    text={'Create A New Course'}
-                    action={createCourseHandler}
+                    text={'Create A New Exam'}
+                    action={createExamHandler}
                 />
 
             </div>
             <div className="bg-radial-gradient from-gradient_alpha via-gradient_bravo to-transparent to-70% backdrop-blur-sm mt-5">
-                <h2 className="text-center p-5 text-4xl text-delta font-semibold bg-gradient-to-r from-blue-500 to-delta text-transparent bg-clip-text">
-                    Your Courses:
+                <h2 className="text-center p-5 text-4xl text-delta font-semibold bg-gradient-to-r from-blue-500 to-delta bg-clip-text">
+                    Your Exams:
                 </h2>
                 {data.length === 0 ? (
                     <h2 className="text-center py-5 px-10 text-3xl font-thin text-slate-400 font-satoshi-lightitalic">
-                        You haven't courses yet, please create a new course or add one with code and key.
+                        You haven't exams in this course yet, please create a new exam.
                     </h2>
                 ) : (
                     data.map((item) => {
@@ -145,24 +128,25 @@ const CoursesViewer = ({data}) => {
                                         </p>
                                         
                                         <div className='flex pr-10 items-center'>
-                                            <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="courses" data-tooltip-content="Go To Course Exams" 
+                                            <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="exams" data-tooltip-content="Go To Exam Questions" 
                                             onClick={(event) => {
                                                 event.stopPropagation()
                                                 navigate(`exams/${item.id}`)
                                                 }}/>
-                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="courses" data-tooltip-content="Edit Course" 
+                                                
+                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="exams" data-tooltip-content="Edit Exam" 
                                                 onClick={(event) => {
                                                 event.stopPropagation()
-                                                editCourseHandler(item)
+                                                editExamHandler(item)
                                                 }}
                                             />
-                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="courses" data-tooltip-content="Removes Course"
+                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="exams" data-tooltip-content="Removes Exam"
                                                 onClick={(event) => {
                                                     event.stopPropagation()
-                                                    removesCourseHandler(item)
+                                                    removesExamHandler(item)
                                                     }}
                                             />
-                                            <ReactTooltip id='courses' place="top" type="dark" effect="solid" />
+                                            <ReactTooltip id='exams' place="top" type="dark" effect="solid" />
                                         </div>
                                     </div>
                                     {
@@ -171,10 +155,13 @@ const CoursesViewer = ({data}) => {
                                             <div className='  '>
                                                 <div className=' mb-2 flex justify-around'>
                                                     <p className="py-2">
-                                                    <span className="text-slate-300 font-bold">Code: </span> {item.code}
+                                                    <span className="text-slate-300 font-bold">Access Code: </span> {item.access_code}
                                                     </p>
                                                     <p className="py-2">
-                                                        <span className="text-slate-300 font-bold">Access Key:  </span> {item.access_key}
+                                                        <span className="text-slate-300 font-bold">Duration:  </span> {item.duration}
+                                                    </p>
+                                                    <p className="py-2">
+                                                        <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active}
                                                     </p>
                                                 </div>
                                             </div>
@@ -200,8 +187,9 @@ const CoursesViewer = ({data}) => {
     )
 }
 
-CoursesViewer.propTypes = {
-    data: PropTypes.array
+ExamsViewer.propTypes = {
+    data: PropTypes.array.isRequired,
+    courseId : PropTypes.number.isRequired
 };
 
-export default CoursesViewer
+export default ExamsViewer

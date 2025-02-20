@@ -48,7 +48,7 @@ const Navbar = () => {
                         Logout
                     </p>
 
-                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="courses">
+                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="/courses">
                         Go To Courses
                     </a>
                 

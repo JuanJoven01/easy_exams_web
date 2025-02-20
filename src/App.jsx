@@ -8,6 +8,7 @@ import Modal from './components/modal';
 import MainPage from './pages/mainPage'
 import LoginPage from './pages/login';
 import CoursesPage from './pages/courses';
+import ExamsPage from './pages/exams';
 
 import useGlobalContext from "./context/GlobalContext/useGlobalContext";
 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/courses" element={<CoursesPage />} />
+                <Route path="/courses/exams/:id" element={<ExamsPage />} />
                 <Route path="/*" element={<MainPage />} />
               </Routes>
             
