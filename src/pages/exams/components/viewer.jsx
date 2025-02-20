@@ -31,6 +31,8 @@ const ExamsViewer = ({rawData, courseId}) => {
 
     const [isExamCreator, setIsExamCreator] = useState(false)
 
+    const [isExamEditor, setIsExamEditor] = useState(false)
+
     const createExamHandler = () => {
         setIsExamCreator(true)
     }
@@ -52,7 +54,7 @@ const ExamsViewer = ({rawData, courseId}) => {
             isActive : item.is_active,
             id : item.id
         })
-        setIsExamCreator(true)
+        setIsExamEditor(true)
     }
 
     const [isExamEliminator, setIsExamEliminator] = useState(false)
@@ -144,7 +146,7 @@ const ExamsViewer = ({rawData, courseId}) => {
             }
 
             {
-                isExamCreator &&
+                isExamEditor &&
                 <ExamCreatorComponent 
                     type={'editor'}
                     name={examToEditData.name}
@@ -240,7 +242,7 @@ const ExamsViewer = ({rawData, courseId}) => {
                                                         <p className={`py-2 ${item.is_active ? 'text-blue-400' : 'text-red-300'}  `} >
                                                             <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active ? 'Yes' : 'No'}
                                                         </p>
-                                                        <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content="Refresh code" 
+                                                        <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content={`${item.is_active ? 'Deactivate': 'Activate'}`} 
                                                             onClick={(event) => {
                                                                 event.stopPropagation()
                                                                 updateStatusHandler(item.id)
