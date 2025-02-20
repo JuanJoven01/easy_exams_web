@@ -1,5 +1,14 @@
 import axios from "axios"
 
+
+const _getToken = () => {
+    const localStorageLogin = localStorage.getItem('easyAppsLogin');
+    if (localStorageLogin) {
+        const jsonLogin = JSON.parse(localStorageLogin);
+        const token = jsonLogin.token;
+        return token
+    }
+}
 const getExamsAPI = async (id, token) => {
     try {      
         const response = await axios({
@@ -102,6 +111,78 @@ const updateExamAPI = async  (examId, name, description, duration, isActive,  to
     }
 } 
 
+const refreshAccessCodeAPI = async  (examId) => { 
+    try {    
+
+        const token = _getToken()
+        const response = await axios({
+            method: 'put',
+            url: '/api/exams/update_code',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                params: {
+                    exam_id : examId,
+                    },
+                id: new Date().getTime(), // unique id for the request
+                },
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
+
+const refreshExamStatusAPI = async  (examId) => { 
+    try {    
+
+        const token = _getToken()
+        const response = await axios({
+            method: 'put',
+            url: '/api/exams/update_status',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                params: {
+                    exam_id : examId,
+                    },
+                id: new Date().getTime(), // unique id for the request
+                },
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
+
 // const removesCourseAPI = async  (id, token) => { 
 //     try {      
 //         const response = await axios({
@@ -128,39 +209,5 @@ const updateExamAPI = async  (examId, name, description, duration, isActive,  to
 //     }
 // } 
 
-// const addUserToCourseAPI = async  (code, accessKey, token) => { 
-//     try {      
-//         const response = await axios({
-//             method: 'put',
-//             url: '/api/exams/courses/update/add_user',
-//             data: {
-//                 jsonrpc: '2.0',
-//                 method: 'call',
-//                 params: {
-//                     code: code,
-//                     access_key: accessKey,
-//                     },
-//                 id: new Date().getTime(), // unique id for the request
-//                 },
-//         headers: {
-//             'Authorization': `Bearer ${token}`
-//         }
-//         })
-//         if (response.data.result){
-//             return response.data.result
-//         }else {
-//             return {
-//                 'status': 'error',
-//                 'message' : 'Error on the server response'
-//             }
-//         }
-        
-//     } catch (e) {
-//         return {
-//             'status': 'error',
-//             'message' : e.message
-//         }
-//     }
-// } 
 
-export {getExamsAPI,createExamAPI, updateExamAPI}
+export {getExamsAPI,createExamAPI, updateExamAPI, refreshAccessCodeAPI, refreshExamStatusAPI}

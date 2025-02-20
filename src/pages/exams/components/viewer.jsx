@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CustomButton from "../../../components/buttons"
 import ExamCreatorComponent from './creator';
 // import ExamEliminatorComponent from './eliminator';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { FiEdit } from "react-icons/fi";
@@ -11,9 +11,23 @@ import { FiDelete } from "react-icons/fi";
 import { FaRegObjectUngroup } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
-const ExamsViewer = ({data, courseId}) => {
+import { refreshAccessCodeAPI, refreshExamStatusAPI } from '../services/exams';
+
+import { LuRefreshCw } from "react-icons/lu";
+
+import useGlobalContext from '../../../context/GlobalContext/useGlobalContext';
+
+const ExamsViewer = ({rawData, courseId}) => {
+
+    useEffect(()=> {
+        setData(rawData)
+    },[rawData])
+
+    const [data, setData] = useState([])
 
     const navigate = useNavigate()
+
+    const {setIsLoading, setModal} = useGlobalContext()
 
     const [isExamCreator, setIsExamCreator] = useState(false)
 
@@ -64,6 +78,54 @@ const ExamsViewer = ({data, courseId}) => {
         } else{
             setOpenModal(id)
         }
+    }
+    
+    const updateCodeHandler = async  (id) => {
+        setIsLoading(true)
+        const response  = await  refreshAccessCodeAPI(id)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setData((prevData) => {
+            const newData = prevData.map((item) => {
+                if (item.id === response.data.id) {
+                    return { ...item, access_code: response.data.access_code };
+                }
+                return item;
+            });
+            return newData;
+        });
+        setIsLoading(false)
+    }
+
+    const updateStatusHandler = async  (id) => {
+        setIsLoading(true)
+        const response  = await  refreshExamStatusAPI(id)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setData((prevData) => {
+            const newData = prevData.map((item) => {
+                if (item.id === response.data.id) {
+                    return { ...item, is_active: response.data.is_active };
+                }
+                return item;
+            });
+            return newData;
+        });
+        setIsLoading(false)
     }
 
     return (
@@ -132,7 +194,6 @@ const ExamsViewer = ({data, courseId}) => {
                                         <p className="py-2 pl-10 ">
                                             <span className="text-slate-300 font-bold">Name: </span> {item.name}
                                         </p>
-                                        
                                         <div className='flex pr-10 items-center'>
                                             <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="exams" data-tooltip-content="Go To Exam Questions" 
                                             onClick={(event) => {
@@ -144,7 +205,6 @@ const ExamsViewer = ({data, courseId}) => {
                                                 onClick={(event) => {
                                                 event.stopPropagation()
                                                 editExamHandler(item)
-                                                console.log(item, 'item')
                                                 }}
                                             />
                                             <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="exams" data-tooltip-content="Removes Exam"
@@ -161,15 +221,33 @@ const ExamsViewer = ({data, courseId}) => {
                                         <div className=' border-x-2 border-b-2 rounded-md'>
                                             <div className='  '>
                                                 <div className=' mb-2 flex justify-around'>
-                                                    <p className="py-2">
-                                                    <span className="text-slate-300 font-bold">Access Code: </span> {item.access_code}
-                                                    </p>
+                                                    <div className='flex items-center'>
+                                                        <p className="py-2">
+                                                            <span className="text-slate-300 font-bold">Access Code: </span> {item.access_code}
+                                                        </p>
+                                                        <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content="Refresh code" 
+                                                        onClick={(event) => {
+                                                            event.stopPropagation()
+                                                            updateCodeHandler(item.id)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    
                                                     <p className="py-2">
                                                         <span className="text-slate-300 font-bold">Duration:  </span> {item.duration} minutes
                                                     </p>
-                                                    <p className={`py-2 ${item.is_active ? 'text-blue-400' : 'text-red-300'}  `} >
-                                                        <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active ? 'Yes' : 'No'}
-                                                    </p>
+                                                    <div className='flex items-center'>
+                                                        <p className={`py-2 ${item.is_active ? 'text-blue-400' : 'text-red-300'}  `} >
+                                                            <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active ? 'Yes' : 'No'}
+                                                        </p>
+                                                        <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content="Refresh code" 
+                                                            onClick={(event) => {
+                                                                event.stopPropagation()
+                                                                updateStatusHandler(item.id)
+                                                                }}
+                                                            />
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className='mb-2'>
@@ -195,7 +273,7 @@ const ExamsViewer = ({data, courseId}) => {
 }
 
 ExamsViewer.propTypes = {
-    data: PropTypes.array.isRequired,
+    rawData: PropTypes.array.isRequired,
     courseId : PropTypes.number.isRequired
 };
 

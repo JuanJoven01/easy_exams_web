@@ -49,7 +49,7 @@ const ExamsPage = () => {
                 subtitle={`Here you can see and manage your exams that belongs to a course${exams[0] ? ` named ${exams[0].course_name}.` : '.'  } `}
             />
             <ExamsViewer
-                data = {exams}
+                rawData = {exams}
                 courseId={id}
             />
         </div>
