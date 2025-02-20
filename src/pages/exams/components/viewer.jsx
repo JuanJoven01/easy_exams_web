@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import CustomButton from "../../../components/buttons"
 import ExamCreatorComponent from './creator';
-// import ExamEliminatorComponent from './eliminator';
+import ExamEliminatorComponent from './eliminator';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -158,14 +158,14 @@ const ExamsViewer = ({rawData, courseId}) => {
                 />
             }
 
-            {/* {
+            {
                 isExamEliminator &&
                 <ExamEliminatorComponent 
                     name={examToRemovesData.name}
                     courseId= {examToRemovesData.id}
-                    setIsCourseEliminator={setIsExamEliminator}
+                    setIsExamEliminator={setIsExamEliminator}
                 />
-            } */}
+            }
             <div className="flex justify-center w-full">
                 <CustomButton
                     text={'Create A New Exam'}

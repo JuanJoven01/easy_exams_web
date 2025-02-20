@@ -183,31 +183,32 @@ const refreshExamStatusAPI = async  (examId) => {
     }
 } 
 
-// const removesCourseAPI = async  (id, token) => { 
-//     try {      
-//         const response = await axios({
-//             method: 'delete',
-//             url: `/api/exams/courses/delete/${id}`,
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         })
-//         if (response.data){
-//             return response.data
-//         }else {
-//             return {
-//                 'status': 'error',
-//                 'message' : 'Error on the server response'
-//             }
-//         }
+const removesExamAPI = async  (id) => { 
+    try {      
+        const token = _getToken()
+        const response = await axios({
+            method: 'delete',
+            url: `/api/exams/delete/${id}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if (response.data){
+            return response.data
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
         
-//     } catch (e) {
-//         return {
-//             'status': 'error',
-//             'message' : e.message
-//         }
-//     }
-// } 
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
 
 
-export {getExamsAPI,createExamAPI, updateExamAPI, refreshAccessCodeAPI, refreshExamStatusAPI}
+export {getExamsAPI,createExamAPI, updateExamAPI, refreshAccessCodeAPI, refreshExamStatusAPI, removesExamAPI}
