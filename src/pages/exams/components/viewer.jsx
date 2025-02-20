@@ -24,7 +24,9 @@ const ExamsViewer = ({data, courseId}) => {
 
     const [examToEditData, setExamToEditData] = useState({
         name : '', 
-        description: '', 
+        description: '',
+        duration : 0,
+        isActive : false,
         id : ''
     })
 
@@ -32,6 +34,8 @@ const ExamsViewer = ({data, courseId}) => {
         setExamToEditData({
             name : item.name, 
             description: item.description, 
+            duration: item.duration, 
+            isActive : item.is_active,
             id : item.id
         })
         setIsExamCreator(true)
@@ -77,18 +81,20 @@ const ExamsViewer = ({data, courseId}) => {
                 />
             }
 
-            {/* {
-                isExamEditor &&
+            {
+                isExamCreator &&
                 <ExamCreatorComponent 
                     type={'editor'}
                     name={examToEditData.name}
                     description={examToEditData.description}
-                    courseId={examToEditData.id}
+                    duration={examToEditData.duration}
+                    isActive={examToEditData.isActive}
+                    examId={examToEditData.id}
                     setIsExamCreator= {setIsExamCreator}
                 />
             }
 
-            {
+            {/* {
                 isExamEliminator &&
                 <ExamEliminatorComponent 
                     name={examToRemovesData.name}
@@ -138,6 +144,7 @@ const ExamsViewer = ({data, courseId}) => {
                                                 onClick={(event) => {
                                                 event.stopPropagation()
                                                 editExamHandler(item)
+                                                console.log(item, 'item')
                                                 }}
                                             />
                                             <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="exams" data-tooltip-content="Removes Exam"
@@ -158,10 +165,10 @@ const ExamsViewer = ({data, courseId}) => {
                                                     <span className="text-slate-300 font-bold">Access Code: </span> {item.access_code}
                                                     </p>
                                                     <p className="py-2">
-                                                        <span className="text-slate-300 font-bold">Duration:  </span> {item.duration}
+                                                        <span className="text-slate-300 font-bold">Duration:  </span> {item.duration} minutes
                                                     </p>
-                                                    <p className="py-2">
-                                                        <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active}
+                                                    <p className={`py-2 ${item.is_active ? 'text-blue-400' : 'text-red-300'}  `} >
+                                                        <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active ? 'Yes' : 'No'}
                                                     </p>
                                                 </div>
                                             </div>

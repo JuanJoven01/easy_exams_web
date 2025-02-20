@@ -64,18 +64,20 @@ const createExamAPI = async  (name, description, duration, courseId, token) => {
     }
 } 
 
-const updateExamAPI = async  (name, description,courseId, token) => { 
+const updateExamAPI = async  (examId, name, description, duration, isActive,  token) => { 
     try {      
         const response = await axios({
             method: 'put',
-            url: '/api/exams/courses/update/',
+            url: '/api/exams/update/',
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
                 params: {
                     name: name,
                     description: description,
-                    course_id : courseId
+                    duration: duration, 
+                    exam_id : examId,
+                    is_active: isActive
                     },
                 id: new Date().getTime(), // unique id for the request
                 },

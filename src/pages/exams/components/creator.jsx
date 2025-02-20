@@ -12,7 +12,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
     const jsonInfo = JSON.parse(authInfo)
     const token = jsonInfo.token
 
-
+    
     // State to manage form data
     const [formData, setFormData] = useState({
         rawType: type,
@@ -26,6 +26,8 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
         courseId : courseId,
     });
 
+    console.log(formData.isActive)
+
     const {setModal, setIsLoading } = useGlobalContext()
 
     // Handle input field changes
@@ -34,6 +36,13 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
         setFormData((prevData) => ({
         ...prevData,
         [name]: value,
+        }));
+    };
+
+    const isActiveHandler = (isActiveChange) => {
+        setFormData((prevData) => ({
+        ...prevData,
+        isActive: isActiveChange,
         }));
     };
 
@@ -87,9 +96,11 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
         } else if (formData.rawType == 'editor'){
             // Process form data
             const response   =  await updateExamAPI(
+                formData.examId,
                 formData.name,
                 formData.description,
-                formData.examId,
+                formData.duration,
+                formData.isActive,
                 token
             )
             if (response['status'] == 'error') {
@@ -120,7 +131,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                     <h2 className="text-center text-2xl font-bold text-white mb-6">{formData.type}</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-300">
                                 Name
                             </label>
                             <input
@@ -135,7 +146,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                         </div>
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-300">
                                 Description
                             </label>
                             <input
@@ -149,7 +160,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                         </div>
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                            <label htmlFor="duration" className="block text-sm font-medium text-gray-300">
                                 Duration (in Minutes)
                             </label>
                             <input
@@ -164,17 +175,29 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                         {
                             formData.rawType == 'editor'&&
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-300">
                                     Is Active
                                 </label>
-                                <input
-                                    type="text"
-                                    id="isActive"
-                                    name="isActive"
-                                    value={formData.isActive}
-                                    onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
-                                />
+                                <div className='flex text-white font-semibold '>
+                                    <button className={ `mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4  rounded-md shadow-md  hover:bg-blue-600 ${formData.isActive? 'bg-blue-500  ring-2' : 'bg-blue-200'  } `}
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            isActiveHandler(true)
+                                        }}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button className={`mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4   rounded-md shadow-md hover:bg-red-600 ${!formData.isActive? 'bg-red-500  ring-2' : 'bg-red-200' } `}
+                                        onClick={(event) => {
+                                            event.preventDefault()
+                                            isActiveHandler(false)
+                                        }}
+                                    >
+                                        No
+                                    </button>
+                                </div>
+                                
+                                
                             </div>
                         }
                         
