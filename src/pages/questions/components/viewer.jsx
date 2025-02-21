@@ -13,6 +13,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { LuRefreshCw } from "react-icons/lu";
 
 import ShowQuestionType from './questionHeaders/showQuestionType.jsx';
+import ShowQuestionContent from './questionHeaders/showQuestionContent.jsx';
 
 import useGlobalContext from '../../../context/GlobalContext/useGlobalContext';
 
@@ -121,12 +122,10 @@ const QuestionsViewer = ({rawData, examId}) => {
                                             <ShowQuestionType
                                                 rawItem={item}
                                             />
-                                            <div>
-                                                <p className="py-2 pl-10 ">
-                                                    <span className="text-slate-300 font-bold">Question Content: </span> {item.content}
-                                                </p>
-                                                
-                                            </div>
+                                            
+                                            <ShowQuestionContent 
+                                                rawItem={item}
+                                            />
                                             
                                         </div>
                                         
