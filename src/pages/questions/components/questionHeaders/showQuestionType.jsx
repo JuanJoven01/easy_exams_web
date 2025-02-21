@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FiEdit } from "react-icons/fi";
 
 import { updateQuestionTypeAPI } from '../../services';
@@ -30,6 +30,7 @@ const ShowQuestionType = ({rawItem}) => {
 
     const updateQuestionType = async () => {
         setIsLoading(true)
+        console.log(questionType)
         const response = await updateQuestionTypeAPI(item.id, questionType)
         if (response.status == 'error'){
             setModal({
@@ -61,6 +62,7 @@ const ShowQuestionType = ({rawItem}) => {
                         Question Type:
                     </label>
                     <select 
+                        defaultValue={questionType}
                         name="type" 
                         id="type"
                         onChange={handleChange}

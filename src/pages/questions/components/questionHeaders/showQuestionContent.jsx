@@ -6,7 +6,7 @@ import { updateQuestionContentAPI } from '../../services';
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
 
 const ShowQuestionContent = ({rawItem}) => {
-    const {setIsLoading, setModal, isLoading} = useGlobalContext()
+    const {setIsLoading, setModal} = useGlobalContext()
     const [item, setItem] = useState(rawItem)
     useEffect(()=>{
         setItem(rawItem)
@@ -23,8 +23,6 @@ const ShowQuestionContent = ({rawItem}) => {
 
     const updateQuestionContent = async () => {
         await setIsLoading(true)
-        console.log('isLoading 1')
-        console.log(isLoading)
         const response = await updateQuestionContentAPI(item.id, questionContent)
         if (response.status == 'error'){
             setModal({
