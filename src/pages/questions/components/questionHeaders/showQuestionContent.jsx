@@ -61,7 +61,7 @@ const ShowQuestionContent = ({rawItem}) => {
                         className="  mx-5 w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2 hover:cursor-pointer hover:border-blue-500 hover:ring hover:ring-blue-500 hover:ring-opacity-50"
                         style={{
                             'scrollbarColor': 'rgba(0, 255, 234, 0.08) rgba(61, 200, 255, 0.08)',
-                            'height': `${Math.max(50, questionContent.split("\n").length * 30)}px`
+                            'fieldSizing': 'content'
                             }}
                         onClick={(event) => {
                             event.preventDefault();
