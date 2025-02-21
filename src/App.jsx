@@ -9,6 +9,7 @@ import MainPage from './pages/mainPage'
 import LoginPage from './pages/login';
 import CoursesPage from './pages/courses';
 import ExamsPage from './pages/exams';
+import QuestionsPage from './pages/questions';
 
 import useGlobalContext from "./context/GlobalContext/useGlobalContext";
 
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/courses" element={<CoursesPage />} />
                 <Route path="/courses/exams/:id" element={<ExamsPage />} />
+                <Route path="/courses/exams/questions/:id" element={<QuestionsPage />} />
                 <Route path="/*" element={<MainPage />} />
               </Routes>
             
