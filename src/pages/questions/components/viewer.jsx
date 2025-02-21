@@ -12,6 +12,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 import { LuRefreshCw } from "react-icons/lu";
 
+import ShowQuestionType from './questionHeaders/showQuestionType.jsx';
+
 import useGlobalContext from '../../../context/GlobalContext/useGlobalContext';
 
 const QuestionsViewer = ({rawData, examId}) => {
@@ -113,25 +115,31 @@ const QuestionsViewer = ({rawData, examId}) => {
                                             event.preventDefault()
                                             event.stopPropagation()
                                             openTheModal(item.id)
-                                        }}>
-                                        <p className="py-2 pl-10 ">
-                                            <span className="text-slate-300 font-bold">Question: </span> {item.content}
-                                        </p>
+                                        }}
+                                    >
+                                        <div className='w-full'>
+                                            <ShowQuestionType
+                                                rawItem={item}
+                                            />
+                                            <div>
+                                                <p className="py-2 pl-10 ">
+                                                    <span className="text-slate-300 font-bold">Question Content: </span> {item.content}
+                                                </p>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
                                         <div className='flex pr-10 items-center'>
                                             
-                                            <FiEdit className="h-6 w-6  text-cyan-400 mx-3" data-tooltip-id="exams" data-tooltip-content="Edit Exam" 
-                                                onClick={(event) => {
-                                                event.stopPropagation()
-                                                // editExamHandler(item)
-                                                }}
-                                            />
-                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="exams" data-tooltip-content="Removes Exam"
+                                            
+                                            <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Removes Question"
                                                 onClick={(event) => {
                                                     event.stopPropagation()
                                                     // removesExamHandler(item)
                                                     }}
                                             />
-                                            <ReactTooltip id='exams' place="top" type="dark" effect="solid" />
+                                            <ReactTooltip id='questions' place="top" type="dark" effect="solid" />
                                         </div>
                                     </div>
                                     {
