@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { FiEdit } from "react-icons/fi";
 
-import { updateQuestionContentAPI } from '../../services';
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
+import { updateQuestionContentAPI } from '../../../services';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 
-const ShowQuestionContent = ({rawItem}) => {
+const ShowQuestionContent = ({questionData, setQuestionData}) => {
     const {setIsLoading, setModal} = useGlobalContext()
-    const [item, setItem] = useState(rawItem)
-    useEffect(()=>{
-        setItem(rawItem)
-    },[rawItem])
 
 
-    const [questionContent, setQuestionContent] = useState(item.content)
+    const [questionContent, setQuestionContent] = useState(questionData.content)
 
     const handleChange = (event) => {
         setQuestionContent(event.target.value)
@@ -23,7 +19,7 @@ const ShowQuestionContent = ({rawItem}) => {
 
     const updateQuestionContent = async () => {
         await setIsLoading(true)
-        const response = await updateQuestionContentAPI(item.id, questionContent)
+        const response = await updateQuestionContentAPI(questionData.id, questionContent)
         if (response.status == 'error'){
             setModal({
                 'isOpen' : true,
@@ -32,7 +28,7 @@ const ShowQuestionContent = ({rawItem}) => {
             })
             setIsLoading(false)
         }
-        setItem((oldData) =>(
+        setQuestionData((oldData) =>(
             {
                 ...oldData,
                 'content' : response.data.content
@@ -100,11 +96,14 @@ const ShowQuestionContent = ({rawItem}) => {
         {
         !isEditing &&
         <div className='flex items-center'>
-            <p className="py-2 pl-10 whitespace-pre-line text-slate-300 font-bold ">
+            <p className=" pl-10 whitespace-pre-line text-slate-300 font-bold ">
                 Question Content:
             </p>
-            <p className="py-2 pl-10 whitespace-pre-line ">
-                {item.content}
+            <p className="py-2 pl-10 whitespace-pre-line "
+                onClick={(e)=>{
+                    e.stopPropagation()
+                }}>
+                {questionData.content}
             </p>
             <div className='flex items-center'>
                 <FiEdit className="h-6 w-6  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Change Question Content" 
@@ -113,19 +112,23 @@ const ShowQuestionContent = ({rawItem}) => {
                     setIsEditing(true)
                 }}
                 />
-            </div>                                    
-            
+            </div>
         </div>
-
-        
         }
+        {
+            questionData.question_type == 'fill_in_the_blank' &&
+            <p className='pl-10 pb-1'>
+                Note: For the fill in the blank questions, you should set the blank spaces into brackets. Ex: The capital of Colombia is {"{{Bogota}}"}.
+            </p>
+        } 
     </div>
         
     )
 }
 
 ShowQuestionContent.propTypes ={
-    rawItem: PropTypes.array.isRequired,
+    questionData: PropTypes.object.isRequired,
+    setQuestionData: PropTypes.func.isRequired
 }
 
 export default ShowQuestionContent

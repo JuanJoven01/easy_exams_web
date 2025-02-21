@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState, useRef } from 'react';
+import {  useState } from 'react';
 import { FiEdit } from "react-icons/fi";
 
-import { updateQuestionTypeAPI } from '../../services';
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
+import { updateQuestionTypeAPI } from '../../../services';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 
-const ShowQuestionType = ({rawItem}) => {
+const ShowQuestionType = ({questionData, setQuestionData}) => {
     const {setIsLoading, setModal} = useGlobalContext()
-    const [item, setItem] = useState(rawItem)
-    useEffect(()=>{
-        setItem(rawItem)
-    },[rawItem])
 
     const dictToTypes = {
         "multiple_choice": 'Multiple Choice',
@@ -20,7 +16,7 @@ const ShowQuestionType = ({rawItem}) => {
         "matching":'Matching',
     }
 
-    const [questionType, setQuestionType] = useState(item.question_type)
+    const [questionType, setQuestionType] = useState(questionData.question_type)
 
     const handleChange = (event) => {
         setQuestionType(event.target.value)
@@ -30,8 +26,7 @@ const ShowQuestionType = ({rawItem}) => {
 
     const updateQuestionType = async () => {
         setIsLoading(true)
-        console.log(questionType)
-        const response = await updateQuestionTypeAPI(item.id, questionType)
+        const response = await updateQuestionTypeAPI(questionData.id, questionType)
         if (response.status == 'error'){
             setModal({
                 'isOpen' : true,
@@ -39,8 +34,7 @@ const ShowQuestionType = ({rawItem}) => {
                 'message' : response.message,
             })
         }
-        console.log(response)
-        setItem((oldData) =>(
+        setQuestionData((oldData) =>(
             {
                 ...oldData,
                 'question_type' : response.data.question_type
@@ -108,7 +102,7 @@ const ShowQuestionType = ({rawItem}) => {
         !isEditing &&
         <div className='flex items-center'>
             <p className="py-2 pl-10 ">
-                <span className="text-slate-300 font-bold">Question Type: </span> {dictToTypes[item.question_type]}
+                <span className="text-slate-300 font-bold">Question Type: </span> {dictToTypes[questionData.question_type]}
             </p>
             <FiEdit className="h-6 w-6  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Change Question Type" 
             onClick={(event) => {
@@ -124,7 +118,8 @@ const ShowQuestionType = ({rawItem}) => {
 }
 
 ShowQuestionType.propTypes ={
-    rawItem: PropTypes.array.isRequired,
+    questionData: PropTypes.array.isRequired,
+    setQuestionData: PropTypes.func.isRequired
 }
 
 export default ShowQuestionType

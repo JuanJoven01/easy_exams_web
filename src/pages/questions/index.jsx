@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import Header from '../../components/header'
-import QuestionsViewer from './components/viewer'
+import QuestionsViewer from './components'
 
 import { getQuestionsAPI } from './services'
 
