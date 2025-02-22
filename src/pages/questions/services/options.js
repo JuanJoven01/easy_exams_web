@@ -79,4 +79,31 @@ const updateOptionAPI = async  (content, isCorrect, id) => {
     }
 }
 
-export {createOptionAPI, updateOptionAPI}
+const removesOptionAPI = async  (id) => { 
+    try {      
+        const token = _getToken()
+        const response = await axios({
+            method: 'delete',
+            url: `/api/exams/questions/options/delete/${id}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if (response.data){
+            return response.data
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
+
+export {createOptionAPI, updateOptionAPI, removesOptionAPI}

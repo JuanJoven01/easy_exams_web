@@ -5,16 +5,50 @@ import EditMultipleChoiceAnswer from './editMultipleChoiceAns';
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiEdit } from "react-icons/fi";
+import { FiDelete } from "react-icons/fi";
 
 import { useState } from 'react';
 
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+
+import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext';
+
+import { removesOptionAPI } from '../../../../services/options';
 
 const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
 
     const [isEditing, setIsEditing] = useState(0)
 
     const [isCreating, setIsCreating] = useState(false)
+
+    const {setIsLoading, setModal} = useGlobalContext()
+
+    const removesOptionHandler = async (id) => {
+        setIsLoading(true)
+
+        const response = await removesOptionAPI(id)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setQuestionData((prevData)=> {
+            const newArray = questionData.options.map(((item)=>(item)))
+            const index = newArray.findIndex((item) => item.id ==id)
+            newArray.splice(index,1)
+            return ({
+                ...prevData,
+                options: newArray
+            })
+        })
+        setIsLoading(false)
+        console.log(response)
+
+    }
 
     return(
 
@@ -54,6 +88,12 @@ const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
                                                         event.stopPropagation()
                                                         setIsEditing(option.id)
                                                     }}
+                                                />
+                                                <FiDelete className="h-6 w-6 hover:cursor-pointer  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Remove"
+                                                    onClick={(event) => {
+                                                        event.stopPropagation()
+                                                        removesOptionHandler(option.id)
+                                                        }}
                                                 />
                                             </li>)
                                             :
