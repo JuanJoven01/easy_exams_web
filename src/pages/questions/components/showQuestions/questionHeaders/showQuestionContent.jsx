@@ -27,6 +27,7 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
                 'message' : response.message,
             })
             setIsLoading(false)
+            return
         }
         setQuestionData((oldData) =>(
             {

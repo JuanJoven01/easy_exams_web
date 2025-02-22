@@ -146,6 +146,42 @@ const updateQuestionContentAPI = async  (questionId, content) => {
     }
 } 
 
+const updateQuestionCorrectAnswerAPI = async  (questionId, correctAnswer) => { 
+    try {      
+        const token = await _getToken()
+        const response = await axios({
+            method: 'put',
+            url: '/api/exams/questions/update',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                params: {
+                    correct_answer: correctAnswer, 
+                    question_id : questionId,
+                    },
+                id: new Date().getTime(), // unique id for the request
+                },
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
+
 // const updateExamAPI = async  (examId, name, description, duration, isActive,  token) => { 
 //     try {      
 //         const response = await axios({
@@ -284,4 +320,4 @@ const updateQuestionContentAPI = async  (questionId, content) => {
 // } 
 
 
-export {getQuestionsAPI, createQuestionAPI,updateQuestionTypeAPI, updateQuestionContentAPI}
+export {getQuestionsAPI, createQuestionAPI,updateQuestionTypeAPI, updateQuestionContentAPI, updateQuestionCorrectAnswerAPI, _getToken}

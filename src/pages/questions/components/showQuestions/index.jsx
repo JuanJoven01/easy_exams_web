@@ -1,14 +1,4 @@
-
-import ShowQuestionType from "./questionHeaders/showQuestionType"
-import ShowQuestionContent from "./questionHeaders/showQuestionContent"
-
-import { FiEdit } from "react-icons/fi";
-
-import { FaRegObjectUngroup } from "react-icons/fa";
-
-import { LuRefreshCw } from "react-icons/lu";
-
-import useGlobalContext from "../../../../context/GlobalContext/useGlobalContext";
+import QuestionBody from "./questionBody";
 
 import QuestionHeader from "./questionHeaders";
 
@@ -16,23 +6,13 @@ import { useEffect, useState } from "react";
 
 import PropTypes from 'prop-types'
 
-const ShowQuestions = ({question}) => {
+const ShowQuestions = ({question, openTheModal, openModal}) => {
 
     const [questionData, setQuestionData] = useState(question)
 
     useEffect(()=>{
         setQuestionData(question)
     },[question])
-    const [openModal, setOpenModal] = useState('')
-
-    const openTheModal = (id) => {
-        if (openModal == id){
-            setOpenModal('')
-        } else{
-            setOpenModal(id)
-        }
-    }
-
 
     return(
         <div
@@ -53,42 +33,10 @@ const ShowQuestions = ({question}) => {
                 {
                     openModal == questionData.id &&
                     <div className=' border-x-2 border-b-2 rounded-md'>
-                        {/* <div className='  '>
-                            <div className=' mb-2 flex justify-around'>
-                                <div className='flex items-center'>
-                                    <p className="py-2">
-                                        <span className="text-slate-300 font-bold">Access Code: </span> {item.access_code}
-                                    </p>
-                                    <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content="Refresh code" 
-                                    onClick={(event) => {
-                                        event.stopPropagation()
-                                        updateCodeHandler(item.id)
-                                        }}
-                                    />
-                                </div>
-                                
-                                <p className="py-2">
-                                    <span className="text-slate-300 font-bold">Duration:  </span> {item.duration} minutes
-                                </p>
-                                <div className='flex items-center'>
-                                    <p className={`py-2 ${item.is_active ? 'text-blue-400' : 'text-red-300'}  `} >
-                                        <span className="text-slate-300 font-bold">Is Active:  </span> {item.is_active ? 'Yes' : 'No'}
-                                    </p>
-                                    <LuRefreshCw  className='h-6 w-6 text-green-600 mx-3 cursor-pointer' data-tooltip-id="exams" data-tooltip-content={`${item.is_active ? 'Deactivate': 'Activate'}`} 
-                                        onClick={(event) => {
-                                            event.stopPropagation()
-                                            updateStatusHandler(item.id)
-                                            }}
-                                        />
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div className='mb-2'>
-                            <p className=" py-2 px-5 ">
-                                <span className="text-slate-300 font-bold">Description:  </span> {item.description == '' ? "The course haven't a description yet." : item.description}
-                            </p>
-                        </div> */}
+                        <QuestionBody 
+                            questionData={questionData}
+                            setQuestionData={setQuestionData}
+                        /> 
                         
                     </div>
                 }
@@ -97,7 +45,9 @@ const ShowQuestions = ({question}) => {
 }
 
 ShowQuestions.propTypes ={
-    question: PropTypes.object.isRequired
+    question: PropTypes.object.isRequired,
+    openTheModal: PropTypes.func.isRequired,
+    openModal: PropTypes.any.isRequired
 }
 
 

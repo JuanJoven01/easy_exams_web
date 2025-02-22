@@ -72,7 +72,6 @@ const QuestionsCreatorComponent = ({ examId, setIsQuestionCreator, setData}) => 
         }
         const data = response.data
         setData((prevData) => [...prevData, data])
-        console.log(response)
         setIsLoading(false)
         setIsQuestionCreator(false)
     };

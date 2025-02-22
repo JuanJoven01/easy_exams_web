@@ -26,8 +26,6 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
         courseId : courseId,
     });
 
-    console.log(formData.isActive)
-
     const {setModal, setIsLoading } = useGlobalContext()
 
     // Handle input field changes

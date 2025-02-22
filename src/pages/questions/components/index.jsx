@@ -4,7 +4,7 @@ import CustomButton from "../../../components/buttons/index.jsx"
 import QuestionsCreatorComponent from './creator.jsx';
 import { useState, useEffect } from 'react';
 
-import ShowQuestions from './ShowQuestions/index.jsx';
+import ShowQuestions from './showQuestions/index.jsx';
 
 const QuestionsViewer = ({rawData, examId}) => {
 
@@ -17,10 +17,18 @@ const QuestionsViewer = ({rawData, examId}) => {
 
     const [isQuestionCreator, setIsQuestionCreator] = useState(false)
 
-    // const [isQuestionEditor, setIsQuestionEditor] = useState(false)
-
     const createQuestionHandler = () => {
         setIsQuestionCreator(true)
+    }
+
+    const [openModal, setOpenModal] = useState('')
+
+    const openTheModal = (id) => {
+        if (openModal == id){
+            setOpenModal('')
+        } else{
+            setOpenModal(id)
+        }
     }
 
     return (
@@ -46,14 +54,16 @@ const QuestionsViewer = ({rawData, examId}) => {
                 </h2>
                 {data.length === 0 ? (
                     <h2 className="text-center py-5 px-10 text-3xl font-thin text-slate-400 font-satoshi-lightitalic">
-                        You haven't questions in this exam yet, please create a new exam.
+                        {"You haven't questions in this exam yet, please create a new exam."}
                     </h2>
                 ) : (
                     data.map((item) => {
                         return(
                             <ShowQuestions
                             question={item}
-                            key={item.id} />
+                            key={item.id}
+                            openTheModal={openTheModal}
+                            openModal = {openModal} />
                         )
                         
                     })
