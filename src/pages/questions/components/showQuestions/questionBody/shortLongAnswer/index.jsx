@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { FiEdit } from "react-icons/fi";
 
-import { updateQuestionCorrectAnswerAPI } from '../../../services';
+import { updateQuestionCorrectAnswerAPI } from '../../../../services';
 
-import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
+import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext';
 
 const ShortLongAnswer = ({questionData, setQuestionData}) => {
 

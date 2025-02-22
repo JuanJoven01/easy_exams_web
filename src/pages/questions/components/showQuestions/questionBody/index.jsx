@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import ShortLongAnswer from './shortLongAnswer';
+import ShortLongAnswer from './shortLongAnswer/index.jsx';
 import MultipleChoiceAnswer from './multipleChoiseAnswer/index.jsx';
 
 const QuestionBody = ({questionData, setQuestionData}) => {

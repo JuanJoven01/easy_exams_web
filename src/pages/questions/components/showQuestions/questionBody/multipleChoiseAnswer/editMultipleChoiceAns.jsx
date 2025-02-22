@@ -2,16 +2,16 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 import ToggleComponent from '../../../../../../components/toggle'
-import { createOptionAPI } from '../../../../services/options'
+import { updateOptionAPI } from '../../../../services/options'
 
 import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext'
 
-const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreating}) => {
+const EditMultipleChoiceAnswer = ({option, questionData, setQuestionData, setIsEditing}) => {
     
     const [dataForm, setDataForm] = useState({
-        questionID : questionData.id,
-        content: '',
-        isCorrect: false
+        questionID : option.id,
+        content: option.content,
+        isCorrect: option.is_correct
     })
 
     const {setModal, setIsLoading} = useGlobalContext()
@@ -35,29 +35,35 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
 
     const createOption = async () => {
         setIsLoading(true)
-        const response = await createOptionAPI (dataForm.content, dataForm.isCorrect, questionData.id)
+        const response = await updateOptionAPI (dataForm.content, dataForm.isCorrect, option.id)
         if (response.status == 'error'){
             setModal({
                 'isOpen' : true,
                 'isError' : true,
                 'message' : response.message,
             })
+            setIsLoading(false)
             return
         }
-
         setQuestionData((old)=>{
-            const newArray = questionData.options.map((item)=>(item))
-            newArray.push({
-                id: response.data.id,
-                content: response.data.content,
-                is_correct: dataForm.isCorrect
+            const newArray = questionData.options.map((item)=>{
+                if (item.id == option.id){
+                    return({
+                        id: response.data.id,
+                        content: response.data.content,
+                        is_correct: dataForm.isCorrect
+                    })
+                    
+                } else{
+                    return item
+                }
             })
             return({
                 ...old,
                 options: newArray
             })
         })
-        setIsCreating(false)
+        setIsEditing(0)
         setIsLoading(false)
         return
     }
@@ -67,7 +73,7 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
         <form action={createOption} className='flex'>
             <div className='flex py-2 pl-10 '>
                 <label htmlFor="content" className="text-slate-300 font-bold">
-                    New Option:
+                    Content:
                 </label>
                 <input
                     name="content"
@@ -89,7 +95,7 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
                     handleToggle = {handleToggle}
                 />
             </div>
-            <div className='flex-col items-center'>
+            <div className='flex items-center'>
                 <button
                     type="submit"
                     className=" m-2 px-3 hover:cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white rounded-md shadow-md "
@@ -97,14 +103,14 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
                         event.stopPropagation()
                     }}
                     >
-                        Create
+                        Update
                 </button>
 
                 <button
                     type="button"
                     onClick={(event)=>{
                         event.stopPropagation()
-                        setIsCreating(false)
+                        setIsEditing(false)
                     }}
                     className="  m-2 px-3 hover:cursor-pointer  bg-red-500 hover:bg-red-700 text-white rounded-md shadow-md "
                     >
@@ -116,11 +122,11 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
     )
 }
 
-CreateMultipleChoiceAnswer.propTypes = {
+EditMultipleChoiceAnswer.propTypes = {
+    option: PropTypes.object.isRequired,
     questionData: PropTypes.object.isRequired,
     setQuestionData: PropTypes.func.isRequired,
-    setIsCreating: PropTypes.func.isRequired
-
+    setIsEditing: PropTypes.func.isRequired
 }
 
-export default CreateMultipleChoiceAnswer
+export default EditMultipleChoiceAnswer
