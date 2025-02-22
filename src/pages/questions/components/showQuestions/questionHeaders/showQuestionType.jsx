@@ -33,6 +33,7 @@ const ShowQuestionType = ({questionData, setQuestionData}) => {
                 'isError' : true,
                 'message' : response.message,
             })
+            setIsLoading(false)
             return
         }
         setQuestionData((oldData) =>(

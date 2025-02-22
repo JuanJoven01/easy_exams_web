@@ -42,7 +42,9 @@ const CreateMultipleChoiceAnswer = ({questionData, setQuestionData, setIsCreatin
                 'isError' : true,
                 'message' : response.message,
             })
+            setIsLoading(false)
             return
+            
         }
 
         setQuestionData((old)=>{
