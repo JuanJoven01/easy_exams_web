@@ -119,7 +119,7 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
         }
         {
             questionData.question_type == 'fill_in_the_blank' &&
-            <p className='pl-10 pb-1'>
+            <p className='pl-10 pb-1 underline decoration-dotted dec'>
                 Note: For the fill in the blank questions, you should set the blank spaces into brackets. Ex: The capital of Colombia is {"{{Bogota}}"}.
             </p>
         } 

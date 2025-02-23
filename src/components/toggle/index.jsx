@@ -14,9 +14,9 @@ const ToggleComponent = ({content, value, handleToggle}) => {
                     />
                     <div className='flex items-center'>
                         <div
-                        className={`w-11 h-6 rounded-full transition-colors flex items-center ${
-                            value ? 'bg-blue-500' : 'bg-gray-200'
-                        }`}
+                            className={`w-11 h-6 rounded-full transition-colors flex items-center ${
+                                value ? 'bg-blue-500' : 'bg-gray-200'
+                            }`}
                         >
                             <div
                                 className={`relative left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform transform flex items-center ${

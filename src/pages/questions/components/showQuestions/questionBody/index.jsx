@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 
 import ShortLongAnswer from './shortLongAnswer/index.jsx';
 import MultipleChoiceAnswer from './multipleChoiseAnswer/index.jsx';
+import FillInTheBlankAnswer from './fillInTheBlankAnswer/index.jsx';
 
 const QuestionBody = ({questionData, setQuestionData}) => {
     return (
@@ -17,6 +18,14 @@ const QuestionBody = ({questionData, setQuestionData}) => {
             {
                 questionData.question_type == 'multiple_choice' &&
                 <MultipleChoiceAnswer 
+                    questionData={questionData}
+                    setQuestionData={setQuestionData}
+                />
+            }
+
+            {
+                questionData.question_type == 'fill_in_the_blank' &&
+                <FillInTheBlankAnswer 
                     questionData={questionData}
                     setQuestionData={setQuestionData}
                 />
