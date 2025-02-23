@@ -100,10 +100,11 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
             <p className=" pl-10 whitespace-pre-line text-slate-300 font-bold ">
                 Question Content:
             </p>
-            <p className="py-2 pl-10 whitespace-pre-line "
-                onClick={(e)=>{
-                    e.stopPropagation()
-                }}>
+            <p className="py-2 pl-10 whitespace-pre-line w-full "
+                // onClick={(e)=>{
+                //     e.stopPropagation()
+                // }}
+                >
                 {questionData.content}
             </p>
             <div className='flex items-center'>

@@ -96,14 +96,14 @@ const ShortLongAnswer = ({questionData, setQuestionData}) => {
         }
         {
             !isEditing &&
-            <div className='flex items-center'>
+            <div className='flex items-center justify-between'>
                 <div className='mb-2'>
                 <p className=" py-2 px-5 ">
                     <span className="text-slate-300 font-bold">Correct Answer:  </span> {questionData.correct_answer == '' ? "The question haven't a correct answer yet." : questionData.correct_answer}
                 </p>
             </div> 
             <div>
-                <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Change Question Content" 
+                <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-6" data-tooltip-id="questions" data-tooltip-content="Change Question Content" 
                     onClick={(event) => {
                         event.stopPropagation()
                         setIsEditing(true)

@@ -46,7 +46,6 @@ const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
             })
         })
         setIsLoading(false)
-        console.log(response)
 
     }
 
@@ -54,12 +53,12 @@ const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
 
         <div>
             <div className='flex items-center'>
-                <div className='mb-2'>
+                <div className='mb-2 w-full'>
                     <p className=" py-2 px-5 ">
                         <span className="text-slate-300 font-bold">Options:  </span> 
                     </p>
-                    <div className='flex items-center'>
-                        <div className='flex-col'>
+                    <div className='flex items-center w-full justify-between'>
+                        <div className='flex-col w-full'>
                             {
                                 questionData.options.length == 0 && 
                                 <p className=" py-2 px-5 ">
@@ -69,32 +68,42 @@ const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
 
                             {
                                 questionData.options.length != 0 && 
-                                <ul className="max-w-md space-y-1 text-gray-500 list-inside ">
+                                <ul className="space-y-1 text-gray-500">
                                     {questionData.options.map((option) => (
                                         
                                             isEditing != option.id ?
-                                            (<li key={option.id} className='flex items-center pl-10 '>
-                            
-                                                <IoCheckmarkDoneCircleOutline 
-                                                data-tooltip-id="questions" data-tooltip-content={`${option.is_correct ? 'Correct' : 'Incorrect' }` }
-                                                className={` hover:cursor-pointer w-6 h-6 ${option.is_correct ? 'text-green-500' : 'text-red-500' }`} 
+                                            (<li key={option.id} className='flex items-center pl-10 w-full '>
+                                                <div>
+                                                    <IoCheckmarkDoneCircleOutline 
+                                                    data-tooltip-id="questions" data-tooltip-content={`${option.is_correct ? 'Correct' : 'Incorrect' }` }
+                                                    className={` hover:cursor-pointer w-6 h-6 ${option.is_correct ? 'text-green-500' : 'text-red-500' }`} 
+                                                    
+                                                    />
+                                                </div>
                                                 
-                                                />
-                                                <p className='ml-5'>
+                                                <p className='ml-5 w-full text-slate-400'>
                                                     {option.content}
                                                 </p>
-                                                <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Edit" 
-                                                    onClick={(event) => {
-                                                        event.stopPropagation()
-                                                        setIsEditing(option.id)
-                                                    }}
-                                                />
-                                                <FiDelete className="h-6 w-6 hover:cursor-pointer  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Remove"
-                                                    onClick={(event) => {
-                                                        event.stopPropagation()
-                                                        removesOptionHandler(option.id)
-                                                        }}
-                                                />
+                                                <div className='flex items-center'>
+                                                    <div>
+                                                        <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Edit" 
+                                                            onClick={(event) => {
+                                                                event.stopPropagation()
+                                                                setIsEditing(option.id)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <FiDelete className="h-6 w-6 hover:cursor-pointer  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Remove"
+                                                            onClick={(event) => {
+                                                                event.stopPropagation()
+                                                                removesOptionHandler(option.id)
+                                                                }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                
+                                                
                                             </li>)
                                             :
                                             (
@@ -125,7 +134,7 @@ const MultipleChoiceAnswer = ({questionData, setQuestionData}) => {
                         {
                             (!isCreating && isEditing==0) &&
                                 <div className='flex items-center'>
-                                    <IoIosAddCircleOutline className=' h-6 w-6 text-green-500 hover:cursor-pointer mx-3' data-tooltip-id="questions" data-tooltip-content="Add an Option"  
+                                    <IoIosAddCircleOutline className=' h-8 w-8 text-green-500 hover:cursor-pointer mx-5' data-tooltip-id="questions" data-tooltip-content="Add an Option"  
                                     onClick={() => {setIsCreating(true)}}/>
                                 </div>
                         }

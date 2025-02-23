@@ -6,7 +6,7 @@ import MultipleChoiceAnswer from './multipleChoiseAnswer/index.jsx';
 const QuestionBody = ({questionData, setQuestionData}) => {
     return (
 
-        <div>
+        <div className=' '>
             {
                 (questionData.question_type == 'short_answer' || questionData.question_type == 'long_answer') &&
                 <ShortLongAnswer 

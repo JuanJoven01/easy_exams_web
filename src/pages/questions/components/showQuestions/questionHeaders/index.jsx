@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 const QuestionHeader = ({questionData, setQuestionData}) => {
 
     return(
-        <div className="flex">
+        <div className="flex w-full ">
             <div className='w-full'>
                 <ShowQuestionType
                     questionData={questionData}

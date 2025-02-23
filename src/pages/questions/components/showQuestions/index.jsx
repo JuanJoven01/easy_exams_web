@@ -18,7 +18,7 @@ const ShowQuestions = ({question, openTheModal, openModal}) => {
         <div
             className='my-2 font-thin text-xl text-slate-400 font-satoshi-lightitalic'
             >
-                <div className='mb-2 border-2 rounded-md flex justify-between hover:cursor-pointer hover:bg-slate-800' 
+                <div className='mb-2 border-2 rounded-md flex justify-between hover:cursor-pointer hover:bg-slate-800'  
                     onClick={(event)=>{
                         event.preventDefault()
                         event.stopPropagation()
@@ -32,7 +32,7 @@ const ShowQuestions = ({question, openTheModal, openModal}) => {
                 </div>
                 {
                     openModal == questionData.id &&
-                    <div className=' border-x-2 border-b-2 rounded-md'>
+                    <div className=' border-x-2 border-b-2 rounded-2xl shadow-[0px_5px_20px_0px_#2b6cb0] bg-[#001933]'>
                         <QuestionBody 
                             questionData={questionData}
                             setQuestionData={setQuestionData}
