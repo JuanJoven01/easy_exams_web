@@ -26,7 +26,6 @@ const EditPairingAnswer = ({pair, questionData, setQuestionData, setIsEditing}) 
 
     const updatePair = async () => {
         setIsLoading(true)
-        console.log(dataForm.term, dataForm.match, pair.id)
         const response = await updatePairAPI (dataForm.term, dataForm.match, pair.id)
         if (response.status == 'error'){
             setModal({
@@ -37,7 +36,6 @@ const EditPairingAnswer = ({pair, questionData, setQuestionData, setIsEditing}) 
             setIsLoading(false)
             return
         }
-        console.log(dataForm)
         setQuestionData((old)=>{
             const newArray = questionData.pairs.map((item)=>{
                 if (item.id == pair.id){

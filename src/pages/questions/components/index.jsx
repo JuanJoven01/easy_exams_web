@@ -58,13 +58,17 @@ const QuestionsViewer = ({rawData, examId}) => {
                     </h2>
                 ) : (
                     data.map((item) => {
-                        return(
-                            <ShowQuestions
-                            question={item}
-                            key={item.id}
-                            openTheModal={openTheModal}
-                            openModal = {openModal} />
-                        )
+                        if (item){
+                            return(
+                                <ShowQuestions
+                                question={item}
+                                key={item.id}
+                                openTheModal={openTheModal}
+                                openModal = {openModal} 
+                                setData={setData}/>
+                            )
+                        }
+                        
                         
                     })
                 )

@@ -74,7 +74,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                             (<li key={pair.id} className='flex items-center pl-10 w-full '>
                                                 <div>
                                                     <BiCaretRight  
-                                                    className='hover:cursor-pointer w-6 h-6 text-cyan-600'
+                                                    className='w-6 h-6 text-cyan-600'
                                                     
                                                     />
                                                 </div>
@@ -137,7 +137,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                         {
                             (!isCreating && isEditing==0) &&
                                 <div className='flex items-center'>
-                                    <IoIosAddCircleOutline className=' h-8 w-8 text-green-500 hover:cursor-pointer mx-5' data-tooltip-id="questions" data-tooltip-content="Add an Option"  
+                                    <IoIosAddCircleOutline className=' h-8 w-8 text-green-500 hover:cursor-pointer mx-5' data-tooltip-id="questions" data-tooltip-content="Add an Pair"  
                                     onClick={() => {setIsCreating(true)}}/>
                                 </div>
                         }
