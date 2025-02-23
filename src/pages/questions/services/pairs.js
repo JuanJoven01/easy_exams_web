@@ -41,20 +41,19 @@ const createPairAPI = async  (term, match, questionId) => {
 } 
 
 
-const updatePairAPI = async  (content, isCorrect, id) => { 
-
+const updatePairAPI = async  (term, match, id) => { 
     try {      
         const token = _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/question_options/update',
+            url: '/api/exams/question_pairs/update',
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
                 params: {
-                    content: content,
-                    is_correct: isCorrect,
-                    option_id: id,
+                    term: term,
+                    match: match,
+                    pair_id: id,
                     },
                 id: new Date().getTime(), // unique id for the request
                 },

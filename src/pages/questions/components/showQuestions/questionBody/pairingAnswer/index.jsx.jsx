@@ -94,7 +94,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                                         <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Edit" 
                                                             onClick={(event) => {
                                                                 event.stopPropagation()
-                                                                // setIsEditing(pair.id)
+                                                                setIsEditing(pair.id)
                                                             }}
                                                         />
                                                     </div>
@@ -113,7 +113,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                             :
                                             (
                                                 <EditPairingAnswer 
-                                                    option={pair}
+                                                    pair={pair}
                                                     setQuestionData={setQuestionData}
                                                     questionData={questionData}
                                                     setIsEditing={setIsEditing}
