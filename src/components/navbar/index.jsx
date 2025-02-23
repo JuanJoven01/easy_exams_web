@@ -52,9 +52,9 @@ const Navbar = () => {
                         Go To Courses
                     </a>
                 
-                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="" >
+                    {/* <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="" >
                         Go To Easy Apps
-                    </a>
+                    </a> */}
                 </ul>
             }
         </nav>
