@@ -9,12 +9,11 @@ import { FiDelete } from "react-icons/fi";
 
 import { useState } from 'react';
 
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { BiCaretRight } from "react-icons/bi";
 
 import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext';
 
-import { removesOptionAPI } from '../../../../services/options';
+import { removesPairAPI } from '../../../../services/pairs';
 
 const PairingAnswer = ({questionData, setQuestionData}) => {
 
@@ -24,10 +23,9 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
 
     const {setIsLoading, setModal} = useGlobalContext()
 
-    const removesOptionHandler = async (id) => {
+    const removesPairHandler = async (id) => {
         setIsLoading(true)
-
-        const response = await removesOptionAPI(id)
+        const response = await removesPairAPI(id)
         if (response.status == 'error'){
             setModal({
                 'isOpen' : true,
@@ -38,12 +36,12 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
             return
         }
         setQuestionData((prevData)=> {
-            const newArray = questionData.options.map(((item)=>(item)))
+            const newArray = questionData.pairs.map(((item)=>(item)))
             const index = newArray.findIndex((item) => item.id ==id)
             newArray.splice(index,1)
             return ({
                 ...prevData,
-                options: newArray
+                pairs: newArray
             })
         })
         setIsLoading(false)
@@ -102,7 +100,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                                         <FiDelete className="h-6 w-6 hover:cursor-pointer  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Remove"
                                                             onClick={(event) => {
                                                                 event.stopPropagation()
-                                                                // removesOptionHandler(pair.id)
+                                                                removesPairHandler(pair.id)
                                                                 }}
                                                         />
                                                     </div>

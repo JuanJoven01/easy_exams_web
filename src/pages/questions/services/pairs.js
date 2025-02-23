@@ -83,7 +83,7 @@ const removesPairAPI = async  (id) => {
         const token = _getToken()
         const response = await axios({
             method: 'delete',
-            url: `/api/exams/questions/options/delete/${id}`,
+            url: `/api/exams/questions/pairs/delete/${id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
