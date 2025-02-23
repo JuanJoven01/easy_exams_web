@@ -10,6 +10,7 @@ import { FiDelete } from "react-icons/fi";
 import { useState } from 'react';
 
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { BiCaretRight } from "react-icons/bi";
 
 import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext';
 
@@ -60,36 +61,40 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                     <div className='flex items-center w-full justify-between'>
                         <div className='flex-col w-full'>
                             {
-                                questionData.options.length == 0 && 
+                                questionData.pairs.length == 0 && 
                                 <p className=" py-2 px-5 ">
                                     {"The question haven't a options to pair yet."}
                                 </p>
                             }
 
                             {
-                                questionData.options.length != 0 && 
+                                questionData.pairs.length != 0 && 
                                 <ul className="space-y-1 text-gray-500">
-                                    {questionData.options.map((option) => (
+                                    {questionData.pairs.map((pair) => (
                                         
-                                            isEditing != option.id ?
-                                            (<li key={option.id} className='flex items-center pl-10 w-full '>
+                                            isEditing != pair.id ?
+                                            (<li key={pair.id} className='flex items-center pl-10 w-full '>
                                                 <div>
-                                                    <IoCheckmarkDoneCircleOutline 
-                                                    data-tooltip-id="questions" data-tooltip-content={`${option.is_correct ? 'Correct' : 'Incorrect' }` }
-                                                    className={` hover:cursor-pointer w-6 h-6 ${option.is_correct ? 'text-green-500' : 'text-red-500' }`} 
+                                                    <BiCaretRight  
+                                                    className='hover:cursor-pointer w-6 h-6 text-cyan-600'
                                                     
                                                     />
                                                 </div>
+                                                <div className='flex w-full items-center border-b-1 border-dotted '>
+                                                    <p className='ml-5 w-full text-slate-400'>
+                                                        {pair.term} :
+                                                    </p>
+                                                    <p className='ml-5 w-full text-slate-400'>
+                                                        {pair.match}
+                                                    </p>
+                                                </div>
                                                 
-                                                <p className='ml-5 w-full text-slate-400'>
-                                                    {option.content}
-                                                </p>
                                                 <div className='flex items-center'>
                                                     <div>
                                                         <FiEdit className="h-6 w-6 hover:cursor-pointer  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Edit" 
                                                             onClick={(event) => {
                                                                 event.stopPropagation()
-                                                                setIsEditing(option.id)
+                                                                // setIsEditing(pair.id)
                                                             }}
                                                         />
                                                     </div>
@@ -97,7 +102,7 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                                         <FiDelete className="h-6 w-6 hover:cursor-pointer  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Remove"
                                                             onClick={(event) => {
                                                                 event.stopPropagation()
-                                                                removesOptionHandler(option.id)
+                                                                // removesOptionHandler(pair.id)
                                                                 }}
                                                         />
                                                     </div>
@@ -108,11 +113,11 @@ const PairingAnswer = ({questionData, setQuestionData}) => {
                                             :
                                             (
                                                 <EditPairingAnswer 
-                                                    option={option}
+                                                    option={pair}
                                                     setQuestionData={setQuestionData}
                                                     questionData={questionData}
                                                     setIsEditing={setIsEditing}
-                                                    key={option.id}
+                                                    key={pair.id}
                                                 />
                                             )
                                         

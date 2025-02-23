@@ -38,7 +38,7 @@ const CreatePairingAnswer = ({questionData, setQuestionData, setIsCreating}) => 
         }
 
         setQuestionData((old)=>{
-            const newArray = questionData.options.map((item)=>(item))
+            const newArray = questionData.pairs.map((item)=>(item))
             newArray.push({
                 id: response.data.id,
                 term: response.data.term,
@@ -46,7 +46,7 @@ const CreatePairingAnswer = ({questionData, setQuestionData, setIsCreating}) => 
             })
             return({
                 ...old,
-                options: newArray
+                pairs: newArray
             })
         })
         setIsCreating(false)
