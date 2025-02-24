@@ -105,19 +105,31 @@ const UploadImage = ({questionData, setQuestionData, setIsEditing}) =>{
                         <div className='mt-5 flex self-center flex-col'>
                             <img src={`${draggedData}`} alt="Dragged Image" className='w-[300px] self-center ' />
                             <div className=' flex mt-5 self-center'>
-                                <CustomButton
-                                    text={'Upload Image'}
-                                    action={()=> updateImage()}
-                                />
+                                <button
+                                    type="button"
+                                    onClick={(event)=>{
+                                        event.stopPropagation()
+                                        updateImage()
+                                    }}
+                                    className="  m-2 px-3 hover:cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white rounded-md shadow-md "
+                                    >
+                                        Upload Image
+                                </button>
                                 
                             </div>                
                         </div>
                 }               
                 <div className='my-5 flex self-center'>
-                    <CustomButton
-                        text={'Cancel'}
-                        action={()=>setIsEditing(false)}
-                    />
+                    <button
+                        type="button"
+                        onClick={(event)=>{
+                            event.stopPropagation()
+                            setIsEditing(false)
+                        }}
+                        className="  m-2 px-3 hover:cursor-pointer  bg-red-500 hover:bg-red-700 text-white rounded-md shadow-md "
+                        >
+                            Cancel
+                    </button>
                 </div>
                 
             </div>

@@ -5,12 +5,36 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 import UploadImage from './uploadImage'
+
+import { updateQuestionImageAPI } from '../../../../services'
 import CustomButton from '../../../../../../components/buttons'
 import useGlobalContext from '../../../../../../context/GlobalContext/useGlobalContext'
 
 const ImageViewer = ({questionData , setQuestionData}) => {
 
     const [isEditing, setIsEditing] = useState(false)
+
+    const {setIsLoading, setModal} = useGlobalContext()
+
+    const removeImage = async () => {
+        setIsLoading(true)
+        const response = await updateQuestionImageAPI(questionData.id, false)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setQuestionData((prevData)=>({
+            ...prevData,
+            image: false
+        }))
+
+        setIsLoading(false)
+    } 
 
     return(
         <div className='flex w-full flex-col'>
@@ -42,11 +66,32 @@ const ImageViewer = ({questionData , setQuestionData}) => {
                             )
                         }
                         <div className=' text-center pt-5'>
-                            <CustomButton 
-                            text={`${questionData.image ? 'Update Image' : 'Upload Image'}`}
-                            action={() =>setIsEditing(true)}
-                            />
+                            <button
+                                type="button"
+                                onClick={(event)=>{
+                                    event.stopPropagation()
+                                    setIsEditing(true)
+                                }}
+                                className="  m-2 px-3 hover:cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white rounded-md shadow-md "
+                                >
+                                    {`${questionData.image ? 'Update Image' : 'Upload Image'}`}
+                            </button>
                         </div>
+                        {
+                            questionData.image &&
+                            <div className=' text-center'>
+                            <button
+                                type="button"
+                                onClick={(event)=>{
+                                    event.stopPropagation()
+                                    removeImage()
+                                }}
+                                className="  m-2 px-3 hover:cursor-pointer  bg-red-500 hover:bg-red-700 text-white rounded-md shadow-md "
+                                >
+                                    Delete Image
+                            </button>
+                        </div>
+                        }
                         
                     </div>
                 )
