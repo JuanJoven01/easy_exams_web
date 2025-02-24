@@ -4,6 +4,7 @@ import Navbar from './components/navbar'
 import Footer from './components/footer'
 import Loading from './components/loading'
 import Modal from './components/modal';
+import ZViewer from './components/ZViewer';
 
 import MainPage from './pages/mainPage'
 import LoginPage from './pages/login';
@@ -16,12 +17,13 @@ import useGlobalContext from "./context/GlobalContext/useGlobalContext";
 
 
 function App() {
-  const { modal, isLoading } = useGlobalContext();
+  const { modal, isLoading, isZViewer } = useGlobalContext();
 
   return (
     <div className="flex flex-col min-h-screen">
       {isLoading && <Loading />}
       {modal.isOpen && <Modal />}
+      {isZViewer.isActive && <ZViewer />}
       <BrowserRouter>
         <Navbar />
         <div className="flex-grow bg-slate-900">

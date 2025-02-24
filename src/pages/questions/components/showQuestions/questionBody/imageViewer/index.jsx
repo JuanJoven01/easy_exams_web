@@ -14,7 +14,7 @@ const ImageViewer = ({questionData , setQuestionData}) => {
 
     const [isEditing, setIsEditing] = useState(false)
 
-    const {setIsLoading, setModal} = useGlobalContext()
+    const {setIsLoading, setModal, setIsZViewer} = useGlobalContext()
 
     const removeImage = async () => {
         setIsLoading(true)
@@ -56,7 +56,22 @@ const ImageViewer = ({questionData , setQuestionData}) => {
                             (
                                 <div>
                                     <p className=' text-center py-5'>Image:</p>
-                                    <img src={`data:image/png;base64,${questionData.image}`} alt="" className=' max-w-[300px] self-center '/>
+                                    <img src={`data:image/png;base64,${questionData.image}`} alt="" className=' hover:cursor-pointer max-w-[300px] self-center ' data-tooltip-id="questions" data-tooltip-content="Show Full Size"
+                                        onClick={()=>{
+                                            setIsZViewer({
+                                                isActive: true,
+                                                children: (
+                                                    <img src={`data:image/png;base64,${questionData.image}`} alt="" className=' hover:cursor-pointer self-center '  data-tooltip-id="questions" data-tooltip-content="Click to Close"
+                                                        onClick={()=>setIsZViewer({
+                                                            isActive: false,
+                                                            children: null
+                                                        })}
+                                                        
+                                                    />
+                                                )
+                                            })
+                                        }}
+                                    />
                                 </div>
                                 
                             )

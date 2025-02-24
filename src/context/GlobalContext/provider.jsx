@@ -13,6 +13,11 @@ export const GlobalProvider = ({ children }) => {
 
     const [isLogged, setIsLogged] = useState(false)
 
+    const [isZViewer, setIsZViewer] = useState({
+        isActive: false,
+        children: null
+    })
+
     return (
         <GlobalContext.Provider value={{ 
                     modal, 
@@ -20,7 +25,9 @@ export const GlobalProvider = ({ children }) => {
                     isLoading,
                     setIsLoading,
                     isLogged,
-                    setIsLogged
+                    setIsLogged,
+                    isZViewer,
+                    setIsZViewer
                 }}>
             {children}
         </GlobalContext.Provider>
