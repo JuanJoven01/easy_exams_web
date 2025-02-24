@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types'
 
 import ShortLongAnswer from './shortLongAnswer/index.jsx';
-import MultipleChoiceAnswer from './multipleChoiceAnswer/index.jsx';
+import MultipleChoiceAnswer from './multipleChoiceAnswer/index.jsx.jsx';
 import FillInTheBlankAnswer from './fillInTheBlankAnswer/index.jsx';
 import PairingAnswer from './pairingAnswer/index.jsx.jsx';
+import ImageViewer from './imageViewer/index.jsx';
 
 const QuestionBody = ({questionData, setQuestionData}) => {
     return (
 
-        <div className=' '>
+        <div className='flex flex-col '>
             {
                 (questionData.question_type == 'short_answer' || questionData.question_type == 'long_answer') &&
                 <ShortLongAnswer 
@@ -38,9 +39,12 @@ const QuestionBody = ({questionData, setQuestionData}) => {
                     setQuestionData={setQuestionData}
                 />
             }
-            <div className='  '>
-                Hello World
-            </div> 
+
+            <ImageViewer 
+                questionData={questionData}
+                setQuestionData={setQuestionData}
+            />
+            
         </div>
     )
 }
