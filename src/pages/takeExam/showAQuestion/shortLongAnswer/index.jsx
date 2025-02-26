@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
 import AttemptImageViewer from '../imageViewer';
 
-const ShortLong = ({questionsAData, setQuestionsAData, showedQuestion, setShowedQuestion}) => {
+// import {createSLAnswerAPI} from '../../services/index.'
 
-    // const [correctAnswer, setCorrectAnswer] = useState(questionData.correct_answer)
+import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
 
+const ShortLong = () => {
+    
     const {setIsLoading, setModal} = useGlobalContext()
 
     const changeHandler = (event)=> {
@@ -15,8 +17,28 @@ const ShortLong = ({questionsAData, setQuestionsAData, showedQuestion, setShowed
         setUserAns(event.target.value)
 
     }
-
+    
     const [userAns , setUserAns] = useState('')
+
+    const {setSendAnswer, questionsAData, showedQuestion} =  useAttemptContext()
+
+    // useEffect(()=>{
+    //     setSendAnswer(
+    //         async ()=>{
+    //             setIsLoading(true)
+    //             const response = createSLAnswerAPI(questionsAData[showedQuestion].id, setUserAns)
+    //             if (response.status == 'error'){
+    //                 setModal({
+    //                     'isOpen' : true,
+    //                     'isError' : true,
+    //                     'message' : response.error,
+    //                 })
+    //                 setIsLoading(false)
+    //                 return
+    //             }
+    //         }
+    //     )
+    // })
     
     return(
 
@@ -53,12 +75,5 @@ const ShortLong = ({questionsAData, setQuestionsAData, showedQuestion, setShowed
     )
 }
 
-ShortLong.propTypes = {
-    questionsAData: PropTypes.array.isRequired,
-    setQuestionsAData: PropTypes.func.isRequired,
-    showedQuestion: PropTypes.number.isRequired,
-    setShowedQuestion: PropTypes.func.isRequired
-
-}
 
 export default ShortLong

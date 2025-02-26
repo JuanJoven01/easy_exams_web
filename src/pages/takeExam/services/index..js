@@ -1,6 +1,4 @@
 import axios from "axios"
-import { TfiControlShuffle } from "react-icons/tfi";
-
 
 const _getToken = () => {
     const localStorageAttempt = localStorage.getItem('easyExamsAttempt');
@@ -8,6 +6,15 @@ const _getToken = () => {
         const jsonAttempt = JSON.parse(localStorageAttempt);
         const token = jsonAttempt.token;
         return token
+    }
+}
+
+const _getAttemptId = () => {
+    const localStorageAttempt = localStorage.getItem('easyExamsAttempt');
+    if (localStorageAttempt) {
+        const jsonAttempt = JSON.parse(localStorageAttempt);
+        const attempt_id = jsonAttempt.attempt_id;
+        return attempt_id
     }
 }
 
@@ -65,4 +72,43 @@ const getRawAnswersAPI = async () => {
     }
 }
 
-export {getRawQuestionsAPI, getRawAnswersAPI}
+const createSLAnswerAPI = async  (QuestionId, AnswerText) => { 
+
+    try {      
+        const token = _getToken()
+        const attempt_id = _getAttemptId()
+        const response = await axios({
+            method: 'post',
+            url: '/api/exams/answers/create',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                params: {
+                    attempt_id: attempt_id,
+                    question_id: QuestionId,
+                    answer_text: AnswerText,
+                    },
+                id: new Date().getTime(), // unique id for the request
+                },
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
+
+export {getRawQuestionsAPI, getRawAnswersAPI, createSLAnswerAPI}

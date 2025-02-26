@@ -2,9 +2,10 @@
 import PropTypes from 'prop-types'
 
 import CustomPNButton from '../../../../components/buttons/customPNButton'
+import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext'
 
-const PrevNextQuestionComponent = ({questionsAData, showedQuestion, setShowedQuestion}) => {
-
+const PrevNextQuestionComponent = () => {
+    const {showedQuestion, setShowedQuestion, sendAnswer, questionsAData} = useAttemptContext()
 
     return (
         <div className='flex justify-end items-center w-full'>
@@ -15,6 +16,7 @@ const PrevNextQuestionComponent = ({questionsAData, showedQuestion, setShowedQue
                                 text={'Preview'}
                                 action={()=>{
                                     setShowedQuestion((prev)=>prev -1)
+                                    sendAnswer()
                                 }}
                             />
                         </div>
@@ -26,6 +28,7 @@ const PrevNextQuestionComponent = ({questionsAData, showedQuestion, setShowedQue
                             text={'Next'}
                             action={()=>{
                                 setShowedQuestion((prev)=>prev + 1)
+                                sendAnswer()
                             }}
                         />
                     </div>
@@ -38,7 +41,8 @@ const PrevNextQuestionComponent = ({questionsAData, showedQuestion, setShowedQue
 PrevNextQuestionComponent.propTypes = {
     questionsAData: PropTypes.array.isRequired,
     setShowedQuestion: PropTypes.func.isRequired,
-    showedQuestion: PropTypes.number.isRequired
+    showedQuestion: PropTypes.number.isRequired,
+    sendAnswer: PropTypes.func.isRequired
 }
 
 export default PrevNextQuestionComponent

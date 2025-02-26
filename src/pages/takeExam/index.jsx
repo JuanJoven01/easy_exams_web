@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router"
 
 import useGlobalContext from "../../context/GlobalContext/useGlobalContext"
@@ -7,6 +7,7 @@ import Header from "../../components/header"
 import ShowAQuestion from "./showAQuestion"
 
 import { getRawQuestionsAPI, getRawAnswersAPI } from "./services/index."
+import useAttemptContext from '../../context/AttemptContext/useAttemptContext'
 
 const TakeExamPage = () => {
 
@@ -14,12 +15,7 @@ const TakeExamPage = () => {
 
     const {setIsLoading, setModal} = useGlobalContext()
 
-    const [attemptData, setAttemptData] = useState({
-        exam_name : '',
-        student_name: ''
-    })
-
-    const [questionsAData, setQuestionsAData] = useState([])  
+    const {setAttemptData, setQuestionsAData, questionsAData, attemptData, setAnswersData } = useAttemptContext()
 
     useEffect(()=>{
         const localStorageAttempt = localStorage.getItem('easyExamsAttempt');
@@ -66,11 +62,12 @@ const TakeExamPage = () => {
                 return
             }
             console.log(response)
+            setAnswersData(response.data)
             setIsLoading(false)
         }
         fetchRawQuestions()
         fetchRawAnswers()
-    },[navigate, setModal, setIsLoading])
+    },[navigate, setModal, setIsLoading, setAttemptData, setQuestionsAData, setAnswersData])
 
     return (
         <div>
@@ -78,14 +75,12 @@ const TakeExamPage = () => {
                 title={attemptData.exam_name}
                 subtitle={`Welcome ${attemptData.student_name}`}
             />
-
-            {
-                questionsAData.length != 0 &&
-                <ShowAQuestion 
-                    questionsAData= {questionsAData}
-                    setQuestionsAData={setQuestionsAData}
-                />
-            }
+            
+                {
+                    questionsAData.length != 0 &&
+                    <ShowAQuestion 
+                    />
+                }
         </div>
     )
 

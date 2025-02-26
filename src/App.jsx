@@ -14,7 +14,7 @@ import QuestionsPage from './pages/questions';
 import TakeExamPage from './pages/takeExam';
 
 import useGlobalContext from "./context/GlobalContext/useGlobalContext";
-
+import AttemptProvider from './context/AttemptContext/provider'
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         <Navbar />
         <div className="flex-grow bg-slate-900">
           <div className="w-full max-w-6xl mx-auto">
-            
+          <AttemptProvider>          
               <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
@@ -39,7 +39,7 @@ function App() {
                 <Route path="/exam" element={<TakeExamPage />} />
                 <Route path="/*" element={<MainPage />} />
               </Routes>
-            
+              </AttemptProvider>
           </div>
         </div>
         <Footer />

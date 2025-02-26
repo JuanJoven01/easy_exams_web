@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import { useState } from 'react';
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
+import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
 
-const MultipleChoice = ({questionsAData, setQuestionsAData, showedQuestion, setShowedQuestion}) => {
+const MultipleChoice = () => {
 
     const {setIsLoading, setModal} = useGlobalContext()
 
     const [checked , setChecked] = useState(0)
+
+    const {questionsAData, showedQuestion } = useAttemptContext()
     return(
 
         <div className='w-full'>
@@ -39,14 +42,6 @@ const MultipleChoice = ({questionsAData, setQuestionsAData, showedQuestion, setS
             </div>
         </div>
     )
-}
-
-MultipleChoice.propTypes = {
-    questionsAData: PropTypes.array.isRequired,
-    setQuestionsAData: PropTypes.func.isRequired,
-    showedQuestion: PropTypes.number.isRequired,
-    setShowedQuestion: PropTypes.func.isRequired
-
 }
 
 export default MultipleChoice

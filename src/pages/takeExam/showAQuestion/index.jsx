@@ -9,9 +9,11 @@ import Pairing from "./pairingAnswer/index.jsx.jsx"
 
 import PrevNextQuestionComponent from "./components/prevNextQuestion.jsx"
 
-const ShowAQuestion = ({questionsAData, setQuestionsAData }) => {
-    
-    const [showedQuestion, setShowedQuestion] = useState(0)
+import useAttemptContext from "../../../context/AttemptContext/useAttemptContext.jsx"
+
+const ShowAQuestion = () => {
+
+    const {questionsAData, showedQuestion} = useAttemptContext()
 
     return (
         <div
@@ -22,45 +24,26 @@ const ShowAQuestion = ({questionsAData, setQuestionsAData }) => {
                 {
                     (questionsAData[showedQuestion].question_type == 'short_answer' || questionsAData[showedQuestion].question_type == 'long_answer') &&
                     <ShortLong 
-                        questionsAData={questionsAData}
-                        setQuestionsAData={setQuestionsAData}
-                        showedQuestion={showedQuestion}
-                        setShowedQuestion={setShowedQuestion}
                     />
                 }
                 {
                     questionsAData[showedQuestion].question_type == 'multiple_choice' &&
                     <MultipleChoice 
-                        questionsAData={questionsAData}
-                        setQuestionsAData={setQuestionsAData}
-                        showedQuestion={showedQuestion}
-                        setShowedQuestion={setShowedQuestion}
                     />
                 }
     
                 {
                     questionsAData[showedQuestion].question_type == 'fill_in_the_blank' &&
                     <FillInTheBlank 
-                        questionsAData={questionsAData}
-                        setQuestionsAData={setQuestionsAData}
-                        showedQuestion={showedQuestion}
-                        setShowedQuestion={setShowedQuestion}
                     />
                 }
                 {
                     questionsAData[showedQuestion].question_type == 'matching' &&
                     <Pairing 
-                        questionsAData={questionsAData}
-                        setQuestionsAData={setQuestionsAData}
-                        showedQuestion={showedQuestion}
-                        setShowedQuestion={setShowedQuestion}
                     />
                 }
                 <div>
                     <PrevNextQuestionComponent 
-                        questionsAData={questionsAData}
-                        setShowedQuestion={setShowedQuestion}
-                        showedQuestion={showedQuestion}
                     />
                 </div>
                 

@@ -2,12 +2,14 @@ import PropTypes from 'prop-types'
 
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
+import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
 import { useEffect, useState } from 'react';
 
-const Pairing = ({questionsAData, setQuestionsAData, showedQuestion, setShowedQuestion}) => {
+const Pairing = () => {
 
 
     const {setIsLoading, setModal} = useGlobalContext()
+    const {questionsAData, showedQuestion} = useAttemptContext()
 
     const [matches, setMatches] = useState([])
 
@@ -74,12 +76,5 @@ const Pairing = ({questionsAData, setQuestionsAData, showedQuestion, setShowedQu
     )
 }
 
-Pairing.propTypes = {
-    questionsAData: PropTypes.array.isRequired,
-    setQuestionsAData: PropTypes.func.isRequired,
-    showedQuestion: PropTypes.number.isRequired,
-    setShowedQuestion: PropTypes.func.isRequired
-
-}
 
 export default Pairing

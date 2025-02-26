@@ -2,14 +2,16 @@ import PropTypes from 'prop-types'
 import {  useContext, useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
-
-const FillInTheBlank = ({questionsAData, setQuestionsAData, showedQuestion, setShowedQuestion}) => {
+import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
+const FillInTheBlank = () => {
 
     const {setIsLoading, setModal} = useGlobalContext()
 
     const [content, setContent] = useState('')
 
     const [options, setOption] = useState([])
+
+    const {questionsAData, showedQuestion} = useAttemptContext()
 
     const changeHandler = async (event, index)=> {
         event.preventDefault()
@@ -64,14 +66,6 @@ const FillInTheBlank = ({questionsAData, setQuestionsAData, showedQuestion, setS
         </div>
         
     )
-}
-
-FillInTheBlank.propTypes = {
-    questionsAData: PropTypes.array.isRequired,
-    setQuestionsAData: PropTypes.func.isRequired,
-    showedQuestion: PropTypes.number.isRequired,
-    setShowedQuestion: PropTypes.func.isRequired
-
 }
 
 export default FillInTheBlank
