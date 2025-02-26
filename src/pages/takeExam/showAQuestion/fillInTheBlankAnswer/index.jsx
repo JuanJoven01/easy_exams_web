@@ -4,6 +4,10 @@ import {  useContext, useEffect, useState } from 'react'
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../components/buttons/customPNButton';
+
+import { createSLAnswerAPI, updateSLAnswerAPI } from '../../services/ShortLongAns';
+
+
 const FillInTheBlank = () => {
 
     const {setIsLoading, setModal} = useGlobalContext()
@@ -12,10 +16,17 @@ const FillInTheBlank = () => {
 
     const [options, setOption] = useState([])
 
-    const {questionsAData, showedQuestion, setShowedQuestion} = useAttemptContext()
+    const [answerId, setAnswerId] = useState(false)
+
+    const [changeWitness, setChangeWitness] = useState(false)
+
+    const {questionsAData, showedQuestion, setShowedQuestion, setAnswersData, answersData} = useAttemptContext()
 
     const changeHandler = async (event, index)=> {
         event.preventDefault()
+        if (!changeWitness){
+            setChangeWitness(true)
+        }
         setOption((prev) =>
             prev.map((opt) =>
                 opt.id === index ? { ...opt, value: event.target.value } : opt
@@ -39,8 +50,69 @@ const FillInTheBlank = () => {
             setOption(newOptions);
         }
         setContent(cleanedContent);
+
+        if (answersData.length !=0){
+            const index = answersData.findIndex((item)=> (item.question_id == questionsAData[showedQuestion].id))
+            if (index != -1){
+                setOption(JSON.parse(answersData[index].answer_text))
+                setAnswerId(answersData[index].id)
+                return
+            }
+        }
         
-    }, [questionsAData, showedQuestion, options.length]);
+    }, [questionsAData, showedQuestion, options.length, answersData]);
+
+    const createFTBAnswer =async ()=>{
+        if(!changeWitness){return}
+        setIsLoading(true)
+        console.log('JSON.stringify(options)')
+        console.log(JSON.stringify(options))
+        const response = await createSLAnswerAPI(questionsAData[showedQuestion].id, JSON.stringify(options))
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setAnswersData((prev)=>{
+            const newData = prev.map((item)=>item)
+            newData.push(response.data)
+            return(newData)
+        })
+        setIsLoading(false)
+    }
+
+    const updateFTBAnswer =async ()=>{
+        if(!changeWitness){return}
+        setIsLoading(true)
+        const response = await updateSLAnswerAPI(answerId, JSON.stringify(options))
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        setAnswersData((prev)=>{
+            const newData = prev.map((item)=>{
+                if (item.id == answerId){
+                    return ({
+                        ...item,
+                        answer_text: JSON.stringify(options)
+                    })
+                }
+                return item
+            })
+            newData.push(response.data)
+            return(newData)
+        })
+        setIsLoading(false)
+    }
     
     return(
 
@@ -73,6 +145,11 @@ const FillInTheBlank = () => {
                             text={'Previous'}
                             action={()=>{
                                 setShowedQuestion((prev)=>prev -1)
+                                if (answerId){
+                                    updateFTBAnswer()
+                                } else {
+                                    createFTBAnswer()
+                                }
                             }}
                         />
                     </div>
@@ -84,6 +161,11 @@ const FillInTheBlank = () => {
                         text={'Next'}
                         action={()=>{
                             setShowedQuestion((prev)=>prev + 1)
+                            if (answerId){
+                                updateFTBAnswer()
+                            } else {
+                                createFTBAnswer()
+                            }
                         }}
                     />
                 </div>
