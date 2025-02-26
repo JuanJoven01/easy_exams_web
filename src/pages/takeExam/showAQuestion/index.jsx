@@ -7,8 +7,6 @@ import MultipleChoice from "./multipleChoiceAnswer/index.jsx"
 import FillInTheBlank from "./fillInTheBlankAnswer"
 import Pairing from "./pairingAnswer/index.jsx.jsx"
 
-import PrevNextQuestionComponent from "./components/prevNextQuestion.jsx"
-
 import useAttemptContext from "../../../context/AttemptContext/useAttemptContext.jsx"
 
 const ShowAQuestion = () => {
@@ -42,12 +40,6 @@ const ShowAQuestion = () => {
                     <Pairing 
                     />
                 }
-                <div>
-                    <PrevNextQuestionComponent 
-                    />
-                </div>
-                
-                
                 </div>
         </div>
     )

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
+import CustomPNButton from '../../../../components/buttons/customPNButton';
 import { useEffect, useState } from 'react';
 
 const Pairing = () => {
 
 
     const {setIsLoading, setModal} = useGlobalContext()
-    const {questionsAData, showedQuestion} = useAttemptContext()
+    const {questionsAData, showedQuestion, setShowedQuestion} = useAttemptContext()
 
     const [matches, setMatches] = useState([])
 
@@ -26,7 +27,6 @@ const Pairing = () => {
     
     const handleChange = (e, id) => {
         e.preventDefault()
-        console.log('here')
         const newMatches = matches.map((item)=>{
             if (item.id != id){
                 return item
@@ -37,7 +37,6 @@ const Pairing = () => {
             })
         })
         setMatches(newMatches)
-        console.log(newMatches)
     }
 
     return(
@@ -72,6 +71,30 @@ const Pairing = () => {
                     
                 }
             </form>
+            <div className='flex justify-end items-center w-full'>
+                {
+                    showedQuestion != 0 &&
+                        <div className=''>
+                            <CustomPNButton
+                                text={'Previous'}
+                                action={()=>{
+                                    setShowedQuestion((prev)=>prev -1)
+                                }}
+                            />
+                        </div>
+                }
+                {
+                    showedQuestion < (questionsAData.length -1) &&
+                    <div className='ml-2'>
+                        <CustomPNButton
+                            text={'Next'}
+                            action={()=>{
+                                setShowedQuestion((prev)=>prev + 1)
+                            }}
+                        />
+                    </div>
+                }
+            </div>
         </div>
     )
 }

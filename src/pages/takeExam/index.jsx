@@ -76,11 +76,11 @@ const TakeExamPage = () => {
                 subtitle={`Welcome ${attemptData.student_name}`}
             />
             
-                {
-                    questionsAData.length != 0 &&
-                    <ShowAQuestion 
-                    />
-                }
+            {
+                questionsAData.length != 0 &&
+                <ShowAQuestion 
+                />
+            }
         </div>
     )
 

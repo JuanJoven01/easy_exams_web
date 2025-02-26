@@ -3,6 +3,7 @@ import {  useContext, useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
+import CustomPNButton from '../../../../components/buttons/customPNButton';
 const FillInTheBlank = () => {
 
     const {setIsLoading, setModal} = useGlobalContext()
@@ -11,7 +12,7 @@ const FillInTheBlank = () => {
 
     const [options, setOption] = useState([])
 
-    const {questionsAData, showedQuestion} = useAttemptContext()
+    const {questionsAData, showedQuestion, setShowedQuestion} = useAttemptContext()
 
     const changeHandler = async (event, index)=> {
         event.preventDefault()
@@ -30,7 +31,6 @@ const FillInTheBlank = () => {
             regex,
             () => `<span class="text-echo">____${_counter++}____</span>`
         );
-        console.log(_counter)
         if (options.length === 0) {
             const newOptions = Array.from({ length: _counter - 1 }, (_, i) => ({
                 id: i + 1,
@@ -39,6 +39,7 @@ const FillInTheBlank = () => {
             setOption(newOptions);
         }
         setContent(cleanedContent);
+        
     }, [questionsAData, showedQuestion, options.length]);
     
     return(
@@ -63,6 +64,31 @@ const FillInTheBlank = () => {
                 }
 
             </form>
+
+            <div className='flex justify-end items-center w-full'>
+            {
+                showedQuestion != 0 &&
+                    <div className=''>
+                        <CustomPNButton
+                            text={'Previous'}
+                            action={()=>{
+                                setShowedQuestion((prev)=>prev -1)
+                            }}
+                        />
+                    </div>
+            }
+            {
+                showedQuestion < (questionsAData.length -1) &&
+                <div className='ml-2'>
+                    <CustomPNButton
+                        text={'Next'}
+                        action={()=>{
+                            setShowedQuestion((prev)=>prev + 1)
+                        }}
+                    />
+                </div>
+            }
+            </div>
         </div>
         
     )

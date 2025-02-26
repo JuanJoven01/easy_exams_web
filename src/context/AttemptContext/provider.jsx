@@ -14,8 +14,6 @@ export const AttemptProvider = ({ children }) => {
 
     const [showedQuestion, setShowedQuestion] = useState(0)
 
-    const [sendAnswer , setSendAnswer] = useState(()=> {return})
-
     return (
         <AttemptContext.Provider value={{ 
                 attemptData,
@@ -24,8 +22,6 @@ export const AttemptProvider = ({ children }) => {
                 setQuestionsAData,
                 showedQuestion,
                 setShowedQuestion,
-                sendAnswer,
-                setSendAnswer,
                 answersData,
                 setAnswersData
                 }}>

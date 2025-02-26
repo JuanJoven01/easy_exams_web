@@ -56,7 +56,6 @@ const NewAttemptComponent = () => {
         })
         localStorage.setItem('easyExamsAttempt', JSON.stringify(response.data))
         navigate("/exam")
-        console.log(response)
         setIsLoading(false)
     };
 
