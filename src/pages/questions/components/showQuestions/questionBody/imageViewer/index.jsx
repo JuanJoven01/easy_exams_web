@@ -61,7 +61,7 @@ const ImageViewer = ({questionData , setQuestionData}) => {
                                             setIsZViewer({
                                                 isActive: true,
                                                 children: (
-                                                    <img src={`data:image/png;base64,${questionData.image}`} alt="" className=' hover:cursor-pointer self-center '  data-tooltip-id="questions" data-tooltip-content="Click to Close"
+                                                    <img src={`data:image/png;base64,${questionData.image}`} alt="" className=' hover:cursor-pointer self-center'  data-tooltip-id="questions" data-tooltip-content="Click to Close"
                                                         onClick={()=>setIsZViewer({
                                                             isActive: false,
                                                             children: null

@@ -26,6 +26,7 @@ const QuestionHeader = ({questionData, setQuestionData, setData}) => {
                 'isError' : true,
                 'message' : response.message,
             })
+            setIsLoading(false)
             return
         }
         setData((prevData) => prevData.filter((item) => item.id !== questionData.id));

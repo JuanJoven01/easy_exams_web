@@ -14,7 +14,7 @@ const ZViewer = () => {
             ></div>
 
             {/* Loading */}
-            <div className='z-50 max-w-[70%] max-h-[70%]'>
+            <div className='z-50 max-w-[70vw] max-h-[70vh]'>
                 {isZViewer.children}
             </div>
         </div>

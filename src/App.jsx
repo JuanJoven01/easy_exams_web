@@ -11,6 +11,7 @@ import LoginPage from './pages/login';
 import CoursesPage from './pages/courses';
 import ExamsPage from './pages/exams';
 import QuestionsPage from './pages/questions';
+import TakeExamPage from './pages/takeExam';
 
 import useGlobalContext from "./context/GlobalContext/useGlobalContext";
 
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/courses" element={<CoursesPage />} />
                 <Route path="/courses/exams/:id" element={<ExamsPage />} />
                 <Route path="/courses/exams/questions/:id" element={<QuestionsPage />} />
+                <Route path="/exam" element={<TakeExamPage />} />
                 <Route path="/*" element={<MainPage />} />
               </Routes>
             
