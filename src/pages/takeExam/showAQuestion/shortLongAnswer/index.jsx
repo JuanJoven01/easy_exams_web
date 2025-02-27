@@ -87,7 +87,7 @@ const ShortLong = () => {
                 }
                 return item
             })
-            newData.push(response.data)
+            // newData.push(response.data)
             return(newData)
         })
         setIsLoading(false)

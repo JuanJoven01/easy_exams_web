@@ -21,8 +21,8 @@ const MultipleChoice = () => {
     const {questionsAData, showedQuestion, setShowedQuestion, setAnswersData, answersData } = useAttemptContext()
 
     const handleChecked = (id) => {
-        if(!changeWitness)
-            {setChangeWitness(true)}
+        if(!changeWitness){
+            setChangeWitness(true)}
         setChecked(id)
     }
 
@@ -53,9 +53,16 @@ const MultipleChoice = () => {
             setIsLoading(false)
             return
         }
+        console.log('response')
+        console.log(response)
         setAnswersData((prev)=>{
             const newData = prev.map((item)=>item)
-            newData.push(response.data)
+            newData.push({
+                ...response.data,
+                selected_options: [{
+                    question_option_id : response.data.selected_option_id
+                }]
+            })
             return(newData)
         })
         setIsLoading(false)
@@ -87,7 +94,7 @@ const MultipleChoice = () => {
                 }
                 return item
             })
-            newData.push(response.data)
+            // newData.push(response.data)
             return(newData)
         })
         setIsLoading(false)
@@ -146,7 +153,6 @@ const MultipleChoice = () => {
                         text={'Next'}
                         action={()=>{
                             setShowedQuestion((prev)=>prev + 1)
-                            createMCAnswer()
                             if (answerId){
                                 updateMCAnswer()
                             } else {
