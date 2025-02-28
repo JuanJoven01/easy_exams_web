@@ -6,37 +6,103 @@ import useAttemptContext from '../../../../context/AttemptContext/useAttemptCont
 import CustomPNButton from '../../../../components/buttons/customPNButton';
 import { useEffect, useState } from 'react';
 
+import { createPairAnswerAPI, updatePairAnswerAPI } from '../../services/PairingAnswer';
+
 const Pairing = () => {
 
 
     const {setIsLoading, setModal} = useGlobalContext()
-    const {questionsAData, showedQuestion, setShowedQuestion} = useAttemptContext()
+    const {questionsAData, showedQuestion, setShowedQuestion, setAnswersData, answersData} = useAttemptContext()
+
+    const [changeWitness, setChangeWitness] = useState(false)
 
     const [matches, setMatches] = useState([])
 
+    const [answerId, setAnswerId] = useState(false)
+
     useEffect(() => {
         if (!questionsAData[showedQuestion]?.pairs) return;
-    
-        const newMatches = questionsAData[showedQuestion].pairs.map((pair) => ({
+        let newMatches = questionsAData[showedQuestion].pairs.map((pair) => ({
             ...pair,
-            match: questionsAData[showedQuestion].matches?.[0] || null, 
+            match: questionsAData[showedQuestion].matches?.[0] || null,
         }));
-    
+        console.log('answersData.length')
+        console.log(answersData.length)
+        if (answersData.length !== 0) {
+            const index = answersData.findIndex(
+                (item) => item.question_id === questionsAData[showedQuestion].id
+            );
+            console.log('index')
+            console.log(index)
+            if (index !== -1) {
+                const answerData = answersData[index];
+                console.log('answerData')
+                console.log(answerData)
+                console.log('newMatches')
+                console.log(newMatches)
+                newMatches = newMatches.map((item) => {
+                    const selectedMatch = answerData.pair_selected.find(
+                        (pair) => pair.question_pair_id === item.id
+                    );
+                    console.log('selectedMatch')
+                    console.log(selectedMatch)
+                    return selectedMatch
+                        ? { ...item, match: selectedMatch.selected_match }
+                        : item;
+                });
+                setAnswerId(answerData.id);
+            }
+        }
+        console.log('newMatches 2')
+        console.log(newMatches)
         setMatches(newMatches);
-    }, [questionsAData, showedQuestion]);
+    }, [questionsAData, showedQuestion, answersData]);
+    
     
     const handleChange = (e, id) => {
         e.preventDefault()
+        if (!changeWitness){
+            setChangeWitness(true)
+        }
         const newMatches = matches.map((item)=>{
-            if (item.id != id){
-                return item
-            }
+            if (id == item.id ){
             return ({
                 ...item,
                 match: e.target.value
-            })
+            })} else{
+                return item
+            }
+            
         })
         setMatches(newMatches)
+    }
+
+    const createPairAnswer =async ()=>{
+        if(!changeWitness){return}
+        setIsLoading(true)
+        console.log('matches')
+        console.log(matches)
+        const response = await createPairAnswerAPI(questionsAData[showedQuestion].id, matches)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        console.log('response.data')
+        console.log(response.data)
+        setAnswersData((prev)=>{
+            const newData = prev.map((item)=>item)
+            newData.push({
+                ...response.data,
+                pair_selected: response.data.selected_pairs
+            })
+            return(newData)
+        })
+        setIsLoading(false)
     }
 
     return(
@@ -53,7 +119,8 @@ const Pairing = () => {
                                 <select id="matches" 
                                     name="matches" 
                                     onChange={(e)=>handleChange(e, pair.id)}
-                                    className='border-2 rounded-md mb-2 hover:cursor-pointer' 
+                                    className='border-2 rounded-md mb-2 hover:cursor-pointer'
+                                    defaultValue={pair.match}
                                 >
                                     {questionsAData[showedQuestion].matches.map((match, index)=>{
                                         return (
@@ -79,6 +146,7 @@ const Pairing = () => {
                                 text={'Previous'}
                                 action={()=>{
                                     setShowedQuestion((prev)=>prev -1)
+                                    createPairAnswer()
                                 }}
                             />
                         </div>
@@ -90,6 +158,7 @@ const Pairing = () => {
                             text={'Next'}
                             action={()=>{
                                 setShowedQuestion((prev)=>prev + 1)
+                                createPairAnswer()
                             }}
                         />
                     </div>
