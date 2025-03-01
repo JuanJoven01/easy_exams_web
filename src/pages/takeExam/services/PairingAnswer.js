@@ -2,10 +2,10 @@
 import axios from "axios"
 import {_getToken} from './index.'
 
-const createPairAnswerAPI = async  (QuestionId, selectedOptions) => { 
+const createPairAnswerAPI = async  (QuestionId, selectedPairs) => { 
 
     try {
-        const structuredMatches = selectedOptions.map((item)=>{
+        const structuredMatches = selectedPairs.map((item)=>{
             return({
                 question_pair_id: item.id,
                 selected_match: item.match
@@ -45,10 +45,16 @@ const createPairAnswerAPI = async  (QuestionId, selectedOptions) => {
     }
 } 
 
-const updatePairAnswerAPI = async  (answerId, optionId) => { 
+const updatePairAnswerAPI = async  (answerId, selectedPairs) => { 
 
     try {      
         const token = _getToken()
+        const structuredMatches = selectedPairs.map((item)=>{
+            return({
+                question_pair_id: item.id,
+                selected_match: item.match
+            })
+        })
         const response = await axios({
             method: 'put',
             url: '/api/exams/answers/update',
@@ -57,7 +63,7 @@ const updatePairAnswerAPI = async  (answerId, optionId) => {
                 method: 'call',
                 params: {
                     answer_id: answerId,
-                    selected_options: [optionId],
+                    selected_pairs: structuredMatches,
                     },
                 id: new Date().getTime(), // unique id for the request
                 },

@@ -26,26 +26,16 @@ const Pairing = () => {
             ...pair,
             match: questionsAData[showedQuestion].matches?.[0] || null,
         }));
-        console.log('answersData.length')
-        console.log(answersData.length)
         if (answersData.length !== 0) {
             const index = answersData.findIndex(
                 (item) => item.question_id === questionsAData[showedQuestion].id
             );
-            console.log('index')
-            console.log(index)
             if (index !== -1) {
                 const answerData = answersData[index];
-                console.log('answerData')
-                console.log(answerData)
-                console.log('newMatches')
-                console.log(newMatches)
                 newMatches = newMatches.map((item) => {
                     const selectedMatch = answerData.pair_selected.find(
                         (pair) => pair.question_pair_id === item.id
                     );
-                    console.log('selectedMatch')
-                    console.log(selectedMatch)
                     return selectedMatch
                         ? { ...item, match: selectedMatch.selected_match }
                         : item;
@@ -53,8 +43,6 @@ const Pairing = () => {
                 setAnswerId(answerData.id);
             }
         }
-        console.log('newMatches 2')
-        console.log(newMatches)
         setMatches(newMatches);
     }, [questionsAData, showedQuestion, answersData]);
     
@@ -80,8 +68,6 @@ const Pairing = () => {
     const createPairAnswer =async ()=>{
         if(!changeWitness){return}
         setIsLoading(true)
-        console.log('matches')
-        console.log(matches)
         const response = await createPairAnswerAPI(questionsAData[showedQuestion].id, matches)
         if (response.status == 'error'){
             setModal({
@@ -92,8 +78,6 @@ const Pairing = () => {
             setIsLoading(false)
             return
         }
-        console.log('response.data')
-        console.log(response.data)
         setAnswersData((prev)=>{
             const newData = prev.map((item)=>item)
             newData.push({
@@ -104,6 +88,40 @@ const Pairing = () => {
         })
         setIsLoading(false)
     }
+
+    const updatePairAnswer =async ()=>{
+        if(!changeWitness){return}
+        setIsLoading(true)
+        const response = await updatePairAnswerAPI(answerId, matches)
+        if (response.status == 'error'){
+            setModal({
+                'isOpen' : true,
+                'isError' : true,
+                'message' : response.message,
+            })
+            setIsLoading(false)
+            return
+        }
+        const newMatches = matches.map((item)=>({
+            ...item,
+            selected_match : item.match,
+            question_pair_id : item.id
+        }))
+        setAnswersData((prev)=>{
+            const newData = prev.map((item)=>{
+                if (item.id == answerId){
+                    return ({
+                        ...item,
+                        pair_selected: newMatches
+                    })
+                }
+                return item
+            })
+            return(newData)
+        })
+        setIsLoading(false)
+    }
+
 
     return(
 
@@ -146,7 +164,11 @@ const Pairing = () => {
                                 text={'Previous'}
                                 action={()=>{
                                     setShowedQuestion((prev)=>prev -1)
-                                    createPairAnswer()
+                                    if (answerId){
+                                        updatePairAnswer()
+                                    } else {
+                                        createPairAnswer()
+                                    }
                                 }}
                             />
                         </div>
@@ -158,7 +180,11 @@ const Pairing = () => {
                             text={'Next'}
                             action={()=>{
                                 setShowedQuestion((prev)=>prev + 1)
-                                createPairAnswer()
+                                if (answerId){
+                                    updatePairAnswer()
+                                } else {
+                                    createPairAnswer()
+                                }
                             }}
                         />
                     </div>
