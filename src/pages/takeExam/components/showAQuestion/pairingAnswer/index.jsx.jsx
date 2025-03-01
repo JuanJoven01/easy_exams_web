@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
 
 
 import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
+import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
 import { useEffect, useState } from 'react';
 
 import { createPairAnswerAPI, updatePairAnswerAPI } from '../../../services/PairingAnswer';
@@ -189,6 +189,14 @@ const Pairing = () => {
                         />
                     </div>
                 }
+                {
+                (showedQuestion == (questionsAData.length -1)) &&
+                <div className='ml-2'>
+                    <CustomFinishButton
+                        
+                    />
+                </div>
+            }
             </div>
         </div>
     )

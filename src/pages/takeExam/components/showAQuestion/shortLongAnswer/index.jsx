@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types'
+
 import { useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 import AttemptImageViewer from '../imageViewer';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
+import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
 
 import {createSLAnswerAPI, updateSLAnswerAPI} from '../../../services/ShortLongAns'
 
@@ -159,6 +160,14 @@ const ShortLong = () => {
                         />
                     </div>
                 }
+                {
+                (showedQuestion == (questionsAData.length -1)) &&
+                <div className='ml-2'>
+                    <CustomFinishButton
+                        
+                    />
+                </div>
+            }
                     
             </div>
             

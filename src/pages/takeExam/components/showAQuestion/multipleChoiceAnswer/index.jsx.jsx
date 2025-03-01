@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
+import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
 
 import { createMCAnswerAPI,updateMCAnswerAPI } from '../../../services/multipleChoice';
 
@@ -53,8 +54,6 @@ const MultipleChoice = () => {
             setIsLoading(false)
             return
         }
-        console.log('response')
-        console.log(response)
         setAnswersData((prev)=>{
             const newData = prev.map((item)=>item)
             newData.push({
@@ -159,6 +158,13 @@ const MultipleChoice = () => {
                                 createMCAnswer()
                             }
                         }}
+                    />
+                </div>
+            }
+            {
+                (showedQuestion == (questionsAData.length -1)) &&
+                <div className='ml-2'>
+                    <CustomFinishButton
                     />
                 </div>
             }

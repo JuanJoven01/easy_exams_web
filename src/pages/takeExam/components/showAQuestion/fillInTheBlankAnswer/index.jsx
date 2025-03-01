@@ -172,7 +172,7 @@ const FillInTheBlank = () => {
                 </div>
             }
             {
-                showedQuestion == (questionsAData.length -1) &&
+                (showedQuestion == (questionsAData.length -1)) &&
                 <div className='ml-2'>
                     <CustomFinishButton
                         

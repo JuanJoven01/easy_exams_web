@@ -60,7 +60,7 @@ const TimerComponent = () => {
                 setModal({
                     'isOpen' : true,
                     'isError' : false,
-                    'message' : `${response.student_name}, Your exam was finished!`,
+                    'message' : `${response.data.student_name}, Your exam was finished!`,
                 })
                 localStorage.removeItem('easyExamsAttempt')
                 setIsLoading(false)

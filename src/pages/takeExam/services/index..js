@@ -75,9 +75,9 @@ const finishAttemptAPI = async  () => {
                 
                 id: new Date().getTime(), // unique id for the request
                 },
-            headers: {
-                'Authorization': `Bearer: ${token}`
-            }
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
         })
         if (response.data.result){
             return response.data.result
