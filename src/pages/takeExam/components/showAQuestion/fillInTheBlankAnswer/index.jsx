@@ -5,6 +5,7 @@ import useGlobalContext from '../../../../../context/GlobalContext/useGlobalCont
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
 import CustomFinishButton from '../../../../../components/buttons/customFinishButton'
+import AttemptImageViewer from '../../imageViewer';
 
 import { createSLAnswerAPI, updateSLAnswerAPI } from '../../../services/ShortLongAns';
 
@@ -66,8 +67,6 @@ const FillInTheBlank = () => {
     const createFTBAnswer =async ()=>{
         if(!changeWitness){return}
         setIsLoading(true)
-        console.log('JSON.stringify(options)')
-        console.log(JSON.stringify(options))
         const response = await createSLAnswerAPI(questionsAData[showedQuestion].id, JSON.stringify(options))
         if (response.status == 'error'){
             setModal({
@@ -137,8 +136,12 @@ const FillInTheBlank = () => {
                 }
 
             </form>
-
+            {questionsAData[showedQuestion].image &&
+                <AttemptImageViewer 
+                image={questionsAData[showedQuestion].image}
+            />}
             <div className='flex justify-end items-center w-full'>
+            
             {
                 showedQuestion != 0 &&
                     <div className=''>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext'
+import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext'
 
 const AttemptImageViewer = ({image}) => {
 

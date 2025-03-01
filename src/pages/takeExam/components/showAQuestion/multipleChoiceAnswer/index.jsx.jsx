@@ -6,6 +6,7 @@ import useGlobalContext from '../../../../../context/GlobalContext/useGlobalCont
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
 import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
+import AttemptImageViewer from '../../imageViewer';
 
 import { createMCAnswerAPI,updateMCAnswerAPI } from '../../../services/multipleChoice';
 
@@ -128,7 +129,12 @@ const MultipleChoice = () => {
                     </div>
                 </div> 
             </div>
+            {questionsAData[showedQuestion].image &&
+                <AttemptImageViewer 
+                    image={questionsAData[showedQuestion].image}
+            />}
             <div className='flex justify-end items-center w-full'>
+            
             {
                 showedQuestion != 0 &&
                     <div className=''>

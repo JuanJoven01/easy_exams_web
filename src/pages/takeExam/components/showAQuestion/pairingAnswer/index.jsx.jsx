@@ -4,6 +4,7 @@ import useGlobalContext from '../../../../../context/GlobalContext/useGlobalCont
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
 import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
+import AttemptImageViewer from '../../imageViewer';
 import { useEffect, useState } from 'react';
 
 import { createPairAnswerAPI, updatePairAnswerAPI } from '../../../services/PairingAnswer';
@@ -156,6 +157,10 @@ const Pairing = () => {
                     
                 }
             </form>
+            {questionsAData[showedQuestion].image &&
+                <AttemptImageViewer 
+                    image={questionsAData[showedQuestion].image}
+            />}
             <div className='flex justify-end items-center w-full'>
                 {
                     showedQuestion != 0 &&

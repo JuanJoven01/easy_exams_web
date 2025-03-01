@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
-import AttemptImageViewer from '../imageViewer';
+import AttemptImageViewer from '../../imageViewer';
 import CustomPNButton from '../../../../../components/buttons/customPNButton';
 import CustomFinishButton from '../../../../../components/buttons/customFinishButton';
 
