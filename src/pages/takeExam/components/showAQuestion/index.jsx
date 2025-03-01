@@ -2,12 +2,12 @@
 import { useState } from "react"
 import PropTypes from 'prop-types'
 
-import ShortLong from "./shortLongAnswer"
-import MultipleChoice from "./multipleChoiceAnswer/index.jsx"
-import FillInTheBlank from "./fillInTheBlankAnswer"
+import ShortLong from "./shortLongAnswer/index.jsx"
+import MultipleChoice from "./multipleChoiceAnswer/index.jsx.jsx"
+import FillInTheBlank from "./fillInTheBlankAnswer/index.jsx"
 import Pairing from "./pairingAnswer/index.jsx.jsx"
 
-import useAttemptContext from "../../../context/AttemptContext/useAttemptContext.jsx"
+import useAttemptContext from "../../../../context/AttemptContext/useAttemptContext.jsx"
 
 const ShowAQuestion = () => {
 

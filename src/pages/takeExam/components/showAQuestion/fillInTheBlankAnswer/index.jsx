@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import {  useContext, useEffect, useState } from 'react'
 
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
-import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
-import CustomPNButton from '../../../../components/buttons/customPNButton';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
+import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
+import CustomPNButton from '../../../../../components/buttons/customPNButton';
+import CustomFinishButton from '../../../../../components/buttons/customFinishButton'
 
-import { createSLAnswerAPI, updateSLAnswerAPI } from '../../services/ShortLongAns';
+import { createSLAnswerAPI, updateSLAnswerAPI } from '../../../services/ShortLongAns';
 
 
 const FillInTheBlank = () => {
@@ -167,6 +168,14 @@ const FillInTheBlank = () => {
                                 createFTBAnswer()
                             }
                         }}
+                    />
+                </div>
+            }
+            {
+                showedQuestion == (questionsAData.length -1) &&
+                <div className='ml-2'>
+                    <CustomFinishButton
+                        
                     />
                 </div>
             }

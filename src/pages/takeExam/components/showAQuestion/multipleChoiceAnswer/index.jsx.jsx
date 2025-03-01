@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 
 import { useEffect, useState } from 'react';
 
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
-import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
-import CustomPNButton from '../../../../components/buttons/customPNButton';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
+import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
+import CustomPNButton from '../../../../../components/buttons/customPNButton';
 
-import { createMCAnswerAPI,updateMCAnswerAPI } from '../../services/multipleChoice';
+import { createMCAnswerAPI,updateMCAnswerAPI } from '../../../services/multipleChoice';
 
 const MultipleChoice = () => {
 

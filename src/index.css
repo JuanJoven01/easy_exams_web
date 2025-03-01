@@ -24,6 +24,7 @@
   --font-satoshi-mediumitalic: "Satoshi-MediumItalic", sans-serif;
   --font-satoshi-blackitalic: "Satoshi-BlackItalic", sans-serif;
   --font-satoshi-lightitalic: "Satoshi-LightItalic", sans-serif;
+  --font-ds-digi: "DS-DIGI", sans-serif;
 
   /* Animaciones personalizadas */
   --animation-spin-slow: spin 5s linear infinite;
@@ -44,4 +45,9 @@
        url("/fonts/satoshi/Satoshi-Regular.woff") format("woff");
 }
 
-/* Repite las declaraciones @font-face para las demás variantes de la fuente Satoshi */
+@font-face {
+  font-family: "DS-DIGI";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/fonts/ds_digital/DS-DIGI.ttf") format("truetype");
+}

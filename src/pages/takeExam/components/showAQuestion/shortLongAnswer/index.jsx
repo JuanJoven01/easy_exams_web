@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 import AttemptImageViewer from '../imageViewer';
-import CustomPNButton from '../../../../components/buttons/customPNButton';
+import CustomPNButton from '../../../../../components/buttons/customPNButton';
 
-import {createSLAnswerAPI, updateSLAnswerAPI} from '../../services/ShortLongAns'
+import {createSLAnswerAPI, updateSLAnswerAPI} from '../../../services/ShortLongAns'
 
-import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
+import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
 
 const ShortLong = () => {
 

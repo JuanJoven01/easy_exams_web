@@ -9,15 +9,6 @@ const _getToken = () => {
     }
 }
 
-// const _getAttemptId = () => {
-//     const localStorageAttempt = localStorage.getItem('easyExamsAttempt');
-//     if (localStorageAttempt) {
-//         const jsonAttempt = JSON.parse(localStorageAttempt);
-//         const attempt_id = jsonAttempt.attempt_id;
-//         return attempt_id
-//     }
-// }
-
 const getRawQuestionsAPI = async () => {
     const token = _getToken()
     try {      
@@ -71,7 +62,40 @@ const getRawAnswersAPI = async () => {
         }
     }
 }
+const finishAttemptAPI = async  () => { 
+
+    try {
+        const token = await _getToken ()     
+        const response = await axios({
+            method: 'put',
+            url: '/api/exams/attempts/update/finished',
+            data: {
+                jsonrpc: '2.0',
+                method: 'call',
+                
+                id: new Date().getTime(), // unique id for the request
+                },
+            headers: {
+                'Authorization': `Bearer: ${token}`
+            }
+        })
+        if (response.data.result){
+            return response.data.result
+        }else {
+            return {
+                'status': 'error',
+                'message' : 'Error on the server response'
+            }
+        }
+        
+    } catch (e) {
+        return {
+            'status': 'error',
+            'message' : e.message
+        }
+    }
+} 
 
 
 
-export {getRawQuestionsAPI, getRawAnswersAPI,_getToken}
+export {getRawQuestionsAPI, getRawAnswersAPI,_getToken,finishAttemptAPI}

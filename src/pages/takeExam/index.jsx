@@ -1,10 +1,11 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
 import useGlobalContext from "../../context/GlobalContext/useGlobalContext"
 
 import Header from "../../components/header"
-import ShowAQuestion from "./showAQuestion"
+import ShowAQuestion from "./components/showAQuestion"
+import TimerComponent from "./components/timerComponent"
 
 import { getRawQuestionsAPI, getRawAnswersAPI } from "./services/index."
 import useAttemptContext from '../../context/AttemptContext/useAttemptContext'
@@ -29,6 +30,8 @@ const TakeExamPage = () => {
                 return
             }
         setAttemptData(JSON.parse(localStorageAttempt))
+        console.log('JSON.parse(localStorageAttempt)')
+        console.log(JSON.parse(localStorageAttempt))
         const fetchRawQuestions = async () => {
             setIsLoading(true)
             const response = await  getRawQuestionsAPI();
@@ -81,6 +84,11 @@ const TakeExamPage = () => {
                 <ShowAQuestion 
                 />
             }
+
+            <TimerComponent
+            />
+
+            
         </div>
     )
 

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 
 
-import useGlobalContext from '../../../../context/GlobalContext/useGlobalContext';
-import useAttemptContext from '../../../../context/AttemptContext/useAttemptContext';
-import CustomPNButton from '../../../../components/buttons/customPNButton';
+import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
+import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
+import CustomPNButton from '../../../../../components/buttons/customPNButton';
 import { useEffect, useState } from 'react';
 
-import { createPairAnswerAPI, updatePairAnswerAPI } from '../../services/PairingAnswer';
+import { createPairAnswerAPI, updatePairAnswerAPI } from '../../../services/PairingAnswer';
 
 const Pairing = () => {
 
