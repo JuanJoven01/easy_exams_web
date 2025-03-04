@@ -10,6 +10,7 @@ import { FiEdit } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { FaRegObjectUngroup } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from 'react-tooltip'
+import { TbGeometry } from "react-icons/tb";
 
 import { refreshAccessCodeAPI, refreshExamStatusAPI } from '../services/exams';
 
@@ -197,6 +198,12 @@ const ExamsViewer = ({rawData, courseId}) => {
                                             <span className="text-slate-300 font-bold">Name: </span> {item.name}
                                         </p>
                                         <div className='flex pr-10 items-center'>
+                                            <TbGeometry className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="exams" data-tooltip-content="Go To Attempts" 
+                                                onClick={(event) => {
+                                                    event.stopPropagation()
+                                                    navigate(`/courses/exams/attempts/${item.id}`)
+                                                    }}
+                                            />
                                             <FaRegObjectUngroup className="h-6 w-6 text-cyan-400 mx-3 cursor-pointer" data-tooltip-id="exams" data-tooltip-content="Go To Exam Questions" 
                                             onClick={(event) => {
                                                 event.stopPropagation()

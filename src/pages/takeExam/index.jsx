@@ -30,8 +30,6 @@ const TakeExamPage = () => {
                 return
             }
         setAttemptData(JSON.parse(localStorageAttempt))
-        console.log('JSON.parse(localStorageAttempt)')
-        console.log(JSON.parse(localStorageAttempt))
         const fetchRawQuestions = async () => {
             setIsLoading(true)
             const response = await  getRawQuestionsAPI();
@@ -46,7 +44,6 @@ const TakeExamPage = () => {
                 navigate('/')
                 return
             }
-            console.log(response)
             setQuestionsAData(response.data)
             setIsLoading(false)
         }
@@ -64,7 +61,6 @@ const TakeExamPage = () => {
                 navigate('/')
                 return
             }
-            console.log(response)
             setAnswersData(response.data)
             setIsLoading(false)
         }
