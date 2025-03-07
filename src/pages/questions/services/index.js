@@ -1,6 +1,6 @@
 import axios from "axios"
 
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const _getToken = () => {
     const localStorageLogin = localStorage.getItem('easyAppsLogin');
     if (localStorageLogin) {
@@ -13,7 +13,7 @@ const getQuestionsAPI = async (id) => {
     const token = _getToken()
     try {      
         const response = await axios({
-            url: `/api/exams/questions/${id}`,
+            url: `${apiUrl}/exams/questions/${id}`,
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -42,7 +42,7 @@ const createQuestionAPI = async  (content, type, examId) => {
         const token = _getToken()
         const response = await axios({
             method: 'post',
-            url: '/api/exams/questions/create',
+            url: `${apiUrl}/exams/questions/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -79,7 +79,7 @@ const updateQuestionTypeAPI = async  (questionId, question_type) => {
         const token = await _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/questions/update',
+            url: `${apiUrl}/exams/questions/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -115,7 +115,7 @@ const updateQuestionContentAPI = async  (questionId, content) => {
         const token = await _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/questions/update',
+            url: `${apiUrl}/exams/questions/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -151,7 +151,7 @@ const updateQuestionCorrectAnswerAPI = async  (questionId, correctAnswer) => {
         const token = await _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/questions/update',
+            url: `${apiUrl}/exams/questions/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -187,7 +187,7 @@ const updateQuestionImageAPI = async  (questionId, image) => {
         const token = await _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/questions/update',
+            url: `${apiUrl}/exams/questions/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -223,7 +223,7 @@ const removesQuestionAPI = async  (id) => {
         const token = _getToken()
         const response = await axios({
             method: 'delete',
-            url: `/api/exams/questions/delete/${id}`,
+            url: `${apiUrl}/exams/questions/delete/${id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }

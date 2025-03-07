@@ -1,12 +1,14 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const loginAPI = async  (email, password) => { 
 
     try {      
         const response = await axios({
             method: 'post',
-            url: '/api/easy_apps/exams/auth',
+            url: `${apiUrl}/easy_apps/exams/auth`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',

@@ -1,9 +1,11 @@
 import axios from "axios"
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const getCoursesAPI = async (token) => {
     try {      
         const response = await axios({
-            url: '/api/exams/courses/get',
+            url: `${apiUrl}/exams/courses/get`,
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -31,7 +33,7 @@ const createCourseAPI = async  (name, description, token) => {
     try {      
         const response = await axios({
             method: 'post',
-            url: '/api/exams/courses/create',
+            url: `${apiUrl}/exams/courses/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -66,7 +68,7 @@ const updateCourseAPI = async  (name, description,courseId, token) => {
     try {      
         const response = await axios({
             method: 'put',
-            url: '/api/exams/courses/update/',
+            url: `${apiUrl}/exams/courses/update/`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -102,7 +104,7 @@ const removesCourseAPI = async  (id, token) => {
     try {      
         const response = await axios({
             method: 'delete',
-            url: `/api/exams/courses/delete/${id}`,
+            url: `${apiUrl}/exams/courses/delete/${id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -128,7 +130,7 @@ const addUserToCourseAPI = async  (code, accessKey, token) => {
     try {      
         const response = await axios({
             method: 'put',
-            url: '/api/exams/courses/update/add_user',
+            url: `${apiUrl}/exams/courses/update/add_user`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',

@@ -1,14 +1,14 @@
 import axios from "axios"
 
 import { _getToken } from "."
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const createPairAPI = async  (term, match, questionId) => { 
 
     try {      
         const token = _getToken()
         const response = await axios({
             method: 'post',
-            url: '/api/exams/questions/pairs/create',
+            url: `${apiUrl}/exams/questions/pairs/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -46,7 +46,7 @@ const updatePairAPI = async  (term, match, id) => {
         const token = _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/question_pairs/update',
+            url: `${apiUrl}/exams/question_pairs/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -83,7 +83,7 @@ const removesPairAPI = async  (id) => {
         const token = _getToken()
         const response = await axios({
             method: 'delete',
-            url: `/api/exams/questions/pairs/delete/${id}`,
+            url: `${apiUrl}/exams/questions/pairs/delete/${id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }

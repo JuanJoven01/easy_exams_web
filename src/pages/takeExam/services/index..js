@@ -1,5 +1,5 @@
 import axios from "axios"
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const _getToken = () => {
     const localStorageAttempt = localStorage.getItem('easyExamsAttempt');
     if (localStorageAttempt) {
@@ -13,7 +13,7 @@ const getRawQuestionsAPI = async () => {
     const token = _getToken()
     try {      
         const response = await axios({
-            url: '/api/exams/raw_questions',
+            url: `${apiUrl}/exams/raw_questions`,
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -40,7 +40,7 @@ const getRawAnswersAPI = async () => {
     const token = _getToken()
     try {      
         const response = await axios({
-            url: '/api/exams/raw_answers',
+            url: `${apiUrl}/exams/raw_answers`,
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ const finishAttemptAPI = async  () => {
         const token = await _getToken ()     
         const response = await axios({
             method: 'put',
-            url: '/api/exams/attempts/update/finished',
+            url: `${apiUrl}/exams/attempts/update/finished`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',

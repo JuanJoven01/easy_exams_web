@@ -1,5 +1,5 @@
 import axios from "axios"
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const _getToken = () => {
     const localStorageLogin = localStorage.getItem('easyAppsLogin');
@@ -12,7 +12,7 @@ const _getToken = () => {
 const getExamsAPI = async (id, token) => {
     try {      
         const response = await axios({
-            url: `/api/exams/get/${id}`,
+            url: `${apiUrl}/exams/get/${id}`,
             method: 'get',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -40,7 +40,7 @@ const createExamAPI = async  (name, description, duration, courseId, token) => {
     try {      
         const response = await axios({
             method: 'post',
-            url: '/api/exams/create',
+            url: `${apiUrl}/exams/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -77,7 +77,7 @@ const updateExamAPI = async  (examId, name, description, duration, isActive,  to
     try {      
         const response = await axios({
             method: 'put',
-            url: '/api/exams/update/',
+            url: `${apiUrl}/exams/update/`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -117,7 +117,7 @@ const refreshAccessCodeAPI = async  (examId) => {
         const token = _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/update_code',
+            url: `${apiUrl}/exams/update_code`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -153,7 +153,7 @@ const refreshExamStatusAPI = async  (examId) => {
         const token = _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/update_status',
+            url: `${apiUrl}/exams/update_status`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -188,7 +188,7 @@ const removesExamAPI = async  (id) => {
         const token = _getToken()
         const response = await axios({
             method: 'delete',
-            url: `/api/exams/delete/${id}`,
+            url: `${apiUrl}/exams/delete/${id}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }

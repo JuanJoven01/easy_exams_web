@@ -1,7 +1,7 @@
 
 import axios from "axios"
 import {_getToken} from './index.'
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const createPairAnswerAPI = async  (QuestionId, selectedPairs) => { 
 
     try {
@@ -14,7 +14,7 @@ const createPairAnswerAPI = async  (QuestionId, selectedPairs) => {
         const token = _getToken()
         const response = await axios({
             method: 'post',
-            url: '/api/exams/answers/create',
+            url: `${apiUrl}/exams/answers/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -57,7 +57,7 @@ const updatePairAnswerAPI = async  (answerId, selectedPairs) => {
         })
         const response = await axios({
             method: 'put',
-            url: '/api/exams/answers/update',
+            url: `${apiUrl}/exams/answers/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',

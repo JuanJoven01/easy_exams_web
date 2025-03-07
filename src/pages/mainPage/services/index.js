@@ -1,12 +1,12 @@
 import axios from "axios";
 
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const newAttemptAPI = async  (accessCode, name, id) => { 
 
     try {      
         const response = await axios({
             method: 'post',
-            url: '/api/exams/attempts/create',
+            url: `${apiUrl}/exams/attempts/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',

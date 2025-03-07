@@ -2,6 +2,7 @@
 import { useParams } from "react-router"
 
 import Header from "../../components/header"
+import GetAttemptsComponent from "./components/getAttempts"
 
 
 const AttemptsPage = () => {
@@ -16,6 +17,7 @@ const AttemptsPage = () => {
                 description={`el id es ${id}`}
             />
 
+            <GetAttemptsComponent />
             
         </div>
 

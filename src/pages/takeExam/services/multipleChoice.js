@@ -1,14 +1,14 @@
 
 import axios from "axios"
 import {_getToken} from './index.'
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const createMCAnswerAPI = async  (QuestionId, optionId) => { 
 
     try {      
         const token = _getToken()
         const response = await axios({
             method: 'post',
-            url: '/api/exams/answers/create',
+            url: `${apiUrl}/exams/answers/create`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
@@ -45,7 +45,7 @@ const updateMCAnswerAPI = async  (answerId, optionId) => {
         const token = _getToken()
         const response = await axios({
             method: 'put',
-            url: '/api/exams/answers/update',
+            url: `${apiUrl}/exams/answers/update`,
             data: {
                 jsonrpc: '2.0',
                 method: 'call',
