@@ -18,8 +18,13 @@ export default ({ mode }) => {
               target: env.VITE_API_URL_PROXY,
               changeOrigin: true,
               // rewrite: (path) => path.replace(/^\/api/, '/api'),
-      },
-            }
+              },
+            },
+            https: {
+              key: './localhost-key.pem',
+              cert: './localhost.pem',
+            },
+
         },
     });
 }

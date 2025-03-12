@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 
 import useGlobalContext from "../../../../context/GlobalContext/useGlobalContext";
 
-import { getAttemptsAPI } from "../../services";
+import { getAttemptsAPI, getQuestionsAPI } from "../../services";
 
 const GetAttemptsComponent = () => {
     const navigate = useNavigate()
@@ -25,6 +25,9 @@ const GetAttemptsComponent = () => {
         startDate: getCurrentDate(),
         endDate: getCurrentDate()
     })
+
+    const [attempts, setAttempts ] = useState(null)
+    const [questions, setQuestions] = useState(null)
 
     const changeHandler = (e) => {
         e.preventDefault()
@@ -51,8 +54,35 @@ const GetAttemptsComponent = () => {
                 // localStorage.removeItem('easyAppsLogin')
                 // navigate('/')
             }
+            console.log("Attempts")
             console.log(response)
             setAttempts(response.data)
+
+        } else {
+            navigate('/')
+        }
+        setIsLoading(false);
+        getQuestions()
+    }
+
+    const getQuestions = async () =>{
+        console.log(form)
+        setIsLoading(true)
+        const localStorageLogin = localStorage.getItem('easyAppsLogin');
+        if (localStorageLogin) {
+            const response = await  getQuestionsAPI(id);
+            if (response.status == 'error'){
+                setModal({
+                    'isOpen' : true,
+                    'isError' : true,
+                    'message' : response.message,
+                })
+                // localStorage.removeItem('easyAppsLogin')
+                // navigate('/')
+            }
+            console.log('Questions')
+            console.log(response)
+            setQuestions(response.data)
 
         } else {
             navigate('/')
@@ -61,8 +91,7 @@ const GetAttemptsComponent = () => {
 
     }
 
-    const [attempts, setAttempts ] = useState(null)
-
+    
     return (
         <div>
             <form action={getAttempts} className="my-2 text-xl text-slate-300 font-satoshi-lightitalic flex justify-center items-center flex-wrap">
@@ -96,7 +125,7 @@ const GetAttemptsComponent = () => {
             </div>
         </form>
         {
-            ( attempts && attempts.length != 0) &&
+            ( attempts && attempts.length != 0 && questions && questions.length != 0) &&
             (
                 <section className="text-xl text-slate-300 font-satoshi-lightitalic text-center">
                     Hay
