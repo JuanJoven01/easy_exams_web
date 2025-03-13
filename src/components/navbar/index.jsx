@@ -40,13 +40,12 @@ const Navbar = () => {
 
             {isLogged &&
                 <ul className="my-auto mr-5 flex">
+                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="/courses">
+                        Courses
+                    </a>
                     <p className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} onClick={removesLogin} href="login">
                         Logout
                     </p>
-
-                    <a className={`px-5 hover:cursor-pointer hover:text-echo hover:underline`} href="/courses">
-                        Go To Courses
-                    </a>
                 </ul>
             }
         </nav>

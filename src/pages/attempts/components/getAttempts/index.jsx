@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
+import ShowAttemptsComponent from "../showAttempts";
+
 import useGlobalContext from "../../../../context/GlobalContext/useGlobalContext";
 
 import { getAttemptsAPI, getQuestionsAPI } from "../../services";
@@ -61,7 +63,7 @@ const GetAttemptsComponent = () => {
         } else {
             navigate('/')
         }
-        setIsLoading(false);
+        // setIsLoading(false);
         getQuestions()
     }
 
@@ -127,9 +129,10 @@ const GetAttemptsComponent = () => {
         {
             ( attempts && attempts.length != 0 && questions && questions.length != 0) &&
             (
-                <section className="text-xl text-slate-300 font-satoshi-lightitalic text-center">
-                    Hay
-                </section>
+                <ShowAttemptsComponent 
+                    questions={questions}
+                    attempts={attempts}
+                />
             )
         }
         {
