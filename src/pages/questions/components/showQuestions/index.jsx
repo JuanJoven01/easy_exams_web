@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import PropTypes from 'prop-types'
 
-const ShowQuestions = ({question, openTheModal, openModal, setData}) => {
+const ShowQuestions = ({question, openTheModal, openModal, index, setData}) => {
 
     const [questionData, setQuestionData] = useState(question)
 
@@ -29,6 +29,7 @@ const ShowQuestions = ({question, openTheModal, openModal, setData}) => {
                         questionData={questionData}
                         setQuestionData={setQuestionData}
                         setData={setData}
+                        index={index}
                     />
                 </div>
                 {
@@ -49,7 +50,8 @@ ShowQuestions.propTypes ={
     question: PropTypes.object.isRequired,
     openTheModal: PropTypes.func.isRequired,
     openModal: PropTypes.any.isRequired,
-    setData: PropTypes.func.isRequired
+    setData: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired
 }
 
 

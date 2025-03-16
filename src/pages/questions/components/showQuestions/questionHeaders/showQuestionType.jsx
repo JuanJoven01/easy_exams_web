@@ -22,8 +22,6 @@ const ShowQuestionType = ({questionData, setQuestionData}) => {
         setQuestionType(event.target.value)
     }
 
-    
-
     const updateQuestionType = async () => {
         setIsLoading(true)
         const response = await updateQuestionTypeAPI(questionData.id, questionType)
@@ -54,7 +52,7 @@ const ShowQuestionType = ({questionData, setQuestionData}) => {
         isEditing &&
         <div className=''>
             <form action={updateQuestionType} className='flex'>
-                <div className='flex py-2 pl-10 '>
+                <div className='flex py-2'>
                     <label htmlFor="type" className="text-slate-300 font-bold">
                         Question Type:
                     </label>
@@ -104,7 +102,7 @@ const ShowQuestionType = ({questionData, setQuestionData}) => {
         {
         !isEditing &&
         <div className='flex items-center'>
-            <p className="py-2 pl-10 ">
+            <p className="py-2 pl-4 ">
                 <span className="text-slate-300 font-bold">Question Type: </span> {dictToTypes[questionData.question_type]}
             </p>
             <FiEdit className="h-6 w-6  text-cyan-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Change Question Type" 

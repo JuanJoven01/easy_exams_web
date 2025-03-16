@@ -46,7 +46,7 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
         isEditing &&
         <div className=''>
             <form action={updateQuestionContent} className='flex'>
-                <div className='flex py-2 pl-10 w-full '>
+                <div className='flex py-2 w-full '>
                     <label htmlFor="content" className="text-slate-300 font-bold">
                         Question Content:
                     </label>
@@ -97,10 +97,10 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
         {
         !isEditing &&
         <div className='flex items-center'>
-            <p className=" pl-10 whitespace-pre-line text-slate-300 font-bold ">
+            <p className=" pl-4 whitespace-pre-line text-slate-300 font-bold ">
                 Question Content:
             </p>
-            <p className="py-2 pl-10 whitespace-pre-line w-full "
+            <p className="py-2 pl-4 whitespace-pre-line w-full "
                 // onClick={(e)=>{
                 //     e.stopPropagation()
                 // }}
@@ -119,7 +119,7 @@ const ShowQuestionContent = ({questionData, setQuestionData}) => {
         }
         {
             questionData.question_type == 'fill_in_the_blank' &&
-            <p className='pl-10 pb-1 underline decoration-dotted dec'>
+            <p className='pl-4 pb-1 underline decoration-dotted dec'>
                 Note: For the fill in the blank questions, you should set the blank spaces into brackets. Ex: The capital of Colombia is {"{{Bogota}}"}.
             </p>
         } 

@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 
 
 
-const QuestionHeader = ({questionData, setQuestionData, setData}) => {
+const QuestionHeader = ({questionData, setQuestionData, index,setData}) => {
 
     const {setModal, setIsLoading} = useGlobalContext()
 
@@ -36,6 +36,9 @@ const QuestionHeader = ({questionData, setQuestionData, setData}) => {
 
     return(
         <div className="flex w-full ">
+            <div className="flex self-center ml-2 font-bold">
+                {`${index+1})`}
+            </div>
             <div className='w-full'>
                 <ShowQuestionType
                     questionData={questionData}
@@ -49,7 +52,7 @@ const QuestionHeader = ({questionData, setQuestionData, setData}) => {
                 
             </div>
             
-            <div className='flex pr-10 items-center'>
+            <div className='flex pr-2 items-center'>
                 <FiDelete className="h-6 w-6  text-amber-600 mx-3" data-tooltip-id="questions" data-tooltip-content="Removes Question"
                     onClick={(event) => {
                         event.stopPropagation()
@@ -66,6 +69,7 @@ QuestionHeader.propTypes = {
     questionData: PropTypes.object.isRequired,
     setQuestionData: PropTypes.func.isRequired,
     setData: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired
 }
 
 

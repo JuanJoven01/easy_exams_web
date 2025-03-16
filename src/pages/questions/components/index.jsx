@@ -57,10 +57,11 @@ const QuestionsViewer = ({rawData, examId}) => {
                         {"You haven't questions in this exam yet, please create a new exam."}
                     </h2>
                 ) : (
-                    data.map((item) => {
+                    data.map((item,index) => {
                         if (item){
                             return(
                                 <ShowQuestions
+                                index={index}
                                 question={item}
                                 key={item.id}
                                 openTheModal={openTheModal}
