@@ -55,6 +55,14 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
         }
     }
 
+    const getAnswerIndex = (answer,questions) => {
+        const index = questions.findIndex((element) => element.id == answer.question_id)
+        console.log('index')
+        console.log(index)
+        return index
+
+    }
+
     return (
         <section className='w-full overflow-x-scroll'>
             <section className={`text-xl text-slate-300 font-satoshi-lightitalic text-center`}
@@ -111,26 +119,36 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
                                 attempt.answer_ids.map((answer, index)=> (
                                     <div key={index}
                                         style={{
-                                            gridColumnStart: index+5,
-                                            gridColumnEnd: index+6
+                                            gridColumnStart: getAnswerIndex(answer, questions)+5,
+                                            gridColumnEnd: getAnswerIndex(answer, questions)+6,
+                                            gridRow: '1/-1',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
                                         }}>
                                             {
                                                 answer.score == 2 &&
                                                 <LuBadgeMinus 
                                                 data-tooltip-id="attempts" 
-                                                data-tooltip-html={getAttemptResponse(answer)} />
+                                                data-tooltip-html={getAttemptResponse(answer)}
+                                                className=' text-slate-400'
+                                                />
                                             }
                                             {
                                                 (answer.score != 2 && answer.is_correct == true )&&
                                                 <LuBadgeCheck 
                                                 data-tooltip-id="attempts" 
-                                                data-tooltip-html={getAttemptResponse(answer)} />
+                                                data-tooltip-html={getAttemptResponse(answer)} 
+                                                className=' text-green-500'
+                                                />
                                             }
                                             {
                                                 (answer.score != 2 && answer.is_correct == false )&&
                                                 <LuBadgeX 
                                                 data-tooltip-id="attempts" 
-                                                data-tooltip-html={getAttemptResponse(answer)} />
+                                                data-tooltip-html={getAttemptResponse(answer)} 
+                                                className=' text-red-500'
+                                                />
                                             }
                                     </div>
                                 ))
