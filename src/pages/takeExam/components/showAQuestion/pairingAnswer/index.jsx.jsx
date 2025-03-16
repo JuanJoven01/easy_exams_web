@@ -205,6 +205,7 @@ const Pairing = () => {
                                 createPairAnswer()
                             }
                             setShowedQuestion(0)
+                            setAnswersData([])
                         }}
                     />
                 </div>

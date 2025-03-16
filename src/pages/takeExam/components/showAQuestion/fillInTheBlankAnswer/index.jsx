@@ -184,6 +184,7 @@ const FillInTheBlank = () => {
                                 createFTBAnswer()
                             }
                             setShowedQuestion(0)
+                            setAnswersData([])
                         }}
                     />
                 </div>

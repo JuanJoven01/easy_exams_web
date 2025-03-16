@@ -179,6 +179,7 @@ const MultipleChoice = () => {
                                 createMCAnswer()
                             }
                             setShowedQuestion(0)
+                            setAnswersData([])
                         }}
                     />
                 </div>

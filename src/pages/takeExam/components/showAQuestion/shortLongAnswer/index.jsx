@@ -169,6 +169,7 @@ const ShortLong = () => {
                                 createSLAnswer()
                             }
                             setShowedQuestion(0)
+                            setAnswersData([])
                         }}
                     />
                 </div>
