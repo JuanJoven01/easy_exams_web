@@ -62,7 +62,7 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
     }
 
     return (
-        <section className='w-full overflow-x-scroll'>
+        <section className='w-full  overflow-x-scroll pb-5'>
             <section className={`text-xl text-slate-300 font-satoshi-lightitalic text-center`}
                 style={{
                     display: 'grid',
@@ -70,16 +70,16 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
                     gridTemplateColumns: `repeat(4, 1fr) repeat(${questions.length}, 40px)`
                 }}
             >
-                <div className='col-start-1 col-end-2 row-start-1 row-end-2 min-w-fit'>
+                <div className='col-start-1 col-end-2 row-start-1 row-end-2 w-70 overflow-scroll'>
                     Student Name
                 </div>
-                <div className='col-start-2 col-end-3 row-start-1 row-end-2 min-w-fit'>
+                <div className='col-start-2 col-end-3 row-start-1 row-end-2 w-50 overflow-scroll'>
                     Student ID
                 </div>
-                <div className='col-start-3 col-end-4 row-start-1 row-end-2 min-w-fit'>
+                <div className='col-start-3 col-end-4 row-start-1 row-end-2 w-25 overflow-scroll'>
                     Score
                 </div>
-                <div className='col-start-4 col-end-5 row-start-1 row-end-2 min-w-fit'>
+                <div className='col-start-4 col-end-5 row-start-1 row-end-2 w-40 overflow-scroll'>
                     Duration
                 </div>
                 {
@@ -105,10 +105,10 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
                                 display: 'grid',
                                 gridTemplateColumns: 'inherit',
                             }}>
-                            <p className={`col-start-1 col-end-2 min-w-fit`}> {attempt.student_name}</p>
-                            <p className={`col-start-2 col-end-3 min-w-fit`}> {attempt.student_id}</p>
-                            <p className={`col-start-3 col-end-4 min-w-fit`}> {attempt.score}</p>
-                            <p className={`col-start-4 col-end-5 min-w-fit`}
+                            <p className={`col-start-1 col-end-2 w-70 overflow-scroll`}> {attempt.student_name}</p>
+                            <p className={`col-start-2 col-end-3 w-50 overflow-scroll`}> {attempt.student_id}</p>
+                            <p className={`col-start-3 col-end-4 w-25 overflow-scroll`}> {attempt.score}</p>
+                            <p className={`col-start-4 col-end-5 w-40 overflow-scroll`}
                                 data-tooltip-id="attempts" 
                                 data-tooltip-content={`Start: ${attempt.start_time} End: ${attempt.end_time}`} > 
                                 {attempt.end_time? getAttemptTime(attempt.end_time, attempt.start_time)  : 'In progress'  }

@@ -41,7 +41,7 @@ const createMCAnswerAPI = async  (QuestionId, optionId) => {
 
 const updateMCAnswerAPI = async  (answerId, optionId) => { 
 
-    try {      
+    try {  
         const token = _getToken()
         const response = await axios({
             method: 'put',
