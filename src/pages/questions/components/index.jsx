@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CustomButton from "../../../components/buttons/index.jsx"
 import QuestionsCreatorComponent from './creator.jsx';
 import { useState, useEffect } from 'react';
+import useGlobalContext from '../../../context/GlobalContext/useGlobalContext.jsx';
 
 import ShowQuestions from './showQuestions/index.jsx';
 
@@ -14,11 +15,18 @@ const QuestionsViewer = ({rawData, examId}) => {
 
     const [data, setData] = useState([])
 
-
-    const [isQuestionCreator, setIsQuestionCreator] = useState(false)
+    const {setIsZViewer} = useGlobalContext()
 
     const createQuestionHandler = () => {
-        setIsQuestionCreator(true)
+        setIsZViewer({
+            isActive: true,
+            children: (
+                <QuestionsCreatorComponent 
+                setData={setData}
+                examId = {examId}
+                />
+            )
+        })
     }
 
     const [openModal, setOpenModal] = useState('')
@@ -33,14 +41,6 @@ const QuestionsViewer = ({rawData, examId}) => {
 
     return (
         <section className="text-slate-300 mt-0 flex-col font-satoshi-blackitalic w-full">
-            {
-                isQuestionCreator &&
-                <QuestionsCreatorComponent 
-                    setData={setData}
-                    setIsQuestionCreator= {setIsQuestionCreator}
-                    examId = {examId}
-                />
-            }
             <div className="flex justify-center w-full">
                 <CustomButton
                     text={'Create A New Question'}
@@ -74,7 +74,15 @@ const QuestionsViewer = ({rawData, examId}) => {
                 )
             }
             </div>
+            <div className="flex justify-center my-10 w-full">
+                <CustomButton
+                    text={'Create A New Question'}
+                    action={createQuestionHandler}
+                />
+
+            </div>
         </section>
+        
     )
 }
 

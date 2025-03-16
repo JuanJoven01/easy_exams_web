@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import { createExamAPI, updateExamAPI } from '../services/exams';
 
-const ExamsCreatorComponent = ({type, name, description, duration, isActive, setIsExamCreator, setIsExamEditor, examId, courseId}) => {
+const ExamsCreatorComponent = ({type, name, description, duration, isActive, examId, courseId}) => {
 
     const authInfo = localStorage.getItem('easyAppsLogin')
     const jsonInfo = JSON.parse(authInfo)
@@ -26,7 +26,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
         courseId : courseId,
     });
 
-    const {setModal, setIsLoading } = useGlobalContext()
+    const {setModal, setIsLoading, setIsZViewer } = useGlobalContext()
 
     // Handle input field changes
     const handleChange = (e) => {
@@ -45,8 +45,10 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
     };
 
     const closeModalHandler = () => {
-        setIsExamCreator(false)
-        setIsExamEditor(false)
+        setIsZViewer({
+            isActive: false,
+            children: null
+        })
     }
 
     // Validate if passwords match
@@ -57,6 +59,10 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                 'isOpen' : true,
                 'isError' : true,
                 'message' : `The Name Must  Unless 5 Characters`,
+            })
+            setIsZViewer({
+                isActive: false,
+                children: null
             })
             return true
         }
@@ -84,6 +90,10 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                     'isError' : true,
                     'message' : response['message'],
                 })
+                setIsZViewer({
+                    isActive: false,
+                    children: null
+                })
                 setIsLoading(false)
                 return
             } else {
@@ -108,6 +118,10 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                     'isError' : true,
                     'message' : response['message'],
                 })
+                setIsZViewer({
+                    isActive: false,
+                    children: null
+                })
                 setIsLoading(false)
                 return
             } else {
@@ -117,108 +131,109 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
                 })
             }
         }
+        setIsZViewer({
+            isActive: false,
+            children: null
+        })
         setIsLoading(false)
-        setIsExamCreator(false)
         window.location.reload()
     };
 
     return (
-        <section className="flex justify-center absolute z-50 w-full backdrop-grayscale-100  ">
-                <div className="mb-10 mx-5 group relative w-96 overflow-hidden rounded-2xl bg-gray-300 p-1 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-500 hover:via-slate-200 hover:to-charlie">
-                    <div className="group-hover:animate-spin-slow invisible absolute -top-40 -bottom-40 left-10 right-10 bg-gradient-to-r from-transparent via-white/90 to-transparent group-hover:visible " ></div>
-                    <div className="relative rounded-xl bg-slate-800 p-6">
-                    <h2 className="text-center text-2xl font-bold text-white mb-6">{formData.type}</h2>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-300">
-                                Description
-                            </label>
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="duration" className="block text-sm font-medium text-gray-300">
-                                Duration (in Minutes)
-                            </label>
-                            <input
-                                type="number"
-                                id="duration"
-                                name="duration"
-                                value={formData.duration}
-                                onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
-                            />
-                        </div>
-                        {
-                            formData.rawType == 'editor'&&
-                            <div>
-                                <label htmlFor="isActive" className="block text-sm font-medium text-gray-300">
-                                    Is Active
-                                </label>
-                                <div className='flex text-white font-semibold '>
-                                    <button className={ `mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4  rounded-md shadow-md  hover:bg-blue-600 ${formData.isActive? 'bg-blue-500  ring-2' : 'bg-blue-200'  } `}
-                                        onClick={(event) => {
-                                            event.preventDefault()
-                                            isActiveHandler(true)
-                                        }}
-                                    >
-                                        Yes
-                                    </button>
-                                    <button className={`mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4   rounded-md shadow-md hover:bg-red-600 ${!formData.isActive? 'bg-red-500  ring-2' : 'bg-red-200' } `}
-                                        onClick={(event) => {
-                                            event.preventDefault()
-                                            isActiveHandler(false)
-                                        }}
-                                    >
-                                        No
-                                    </button>
-                                </div>
-                                
-                                
-                            </div>
-                        }
-                        
-                        
-                        <button
-                        type="submit"
-                        className=" hover:cursor-pointer w-full py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                        >
-                        {formData.button}
-                        </button>
-
-                        <button
-                        type="button"
-                        onClick={closeModalHandler}
-                        className=" hover:cursor-pointer w-full py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                        >
-                        Cancel
-                        </button>
-                    </form>
+        <section className="mb-10 mx-5 group relative w-96 overflow-hidden rounded-2xl bg-gray-300 p-1 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-500 hover:via-slate-200 hover:to-charlie">
+            <div className="group-hover:animate-spin-slow invisible absolute -top-40 -bottom-40 left-10 right-10 bg-gradient-to-r from-transparent via-white/90 to-transparent group-hover:visible " ></div>
+            <div className="relative rounded-xl bg-slate-800 p-6">
+            <h2 className="text-center text-2xl font-bold text-white mb-6">{formData.type}</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+                        Name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
+                    />
                 </div>
-            </div>
-        </section>
+
+                <div>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-300">
+                        Description
+                    </label>
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="duration" className="block text-sm font-medium text-gray-300">
+                        Duration (in Minutes)
+                    </label>
+                    <input
+                        type="number"
+                        id="duration"
+                        name="duration"
+                        value={formData.duration}
+                        onChange={handleChange}
+                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-2"
+                    />
+                </div>
+                {
+                    formData.rawType == 'editor'&&
+                    <div>
+                        <label htmlFor="isActive" className="block text-sm font-medium text-gray-300">
+                            Is Active
+                        </label>
+                        <div className='flex text-white font-semibold '>
+                            <button className={ `mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4  rounded-md shadow-md  hover:bg-blue-600 ${formData.isActive? 'bg-blue-500  ring-2' : 'bg-blue-200'  } `}
+                                onClick={(event) => {
+                                    event.preventDefault()
+                                    isActiveHandler(true)
+                                }}
+                            >
+                                Yes
+                            </button>
+                            <button className={`mt-2 mx-2 hover:cursor-pointer w-full py-2 px-4   rounded-md shadow-md hover:bg-red-600 ${!formData.isActive? 'bg-red-500  ring-2' : 'bg-red-200' } `}
+                                onClick={(event) => {
+                                    event.preventDefault()
+                                    isActiveHandler(false)
+                                }}
+                            >
+                                No
+                            </button>
+                        </div>
+                        
+                        
+                    </div>
+                }
+                
+                
+                <button
+                type="submit"
+                className=" hover:cursor-pointer w-full py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                {formData.button}
+                </button>
+
+                <button
+                type="button"
+                onClick={closeModalHandler}
+                className=" hover:cursor-pointer w-full py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                Cancel
+                </button>
+            </form>
+        </div>
+    </section>
     );
 };
 
@@ -229,8 +244,6 @@ ExamsCreatorComponent.propTypes = {
     description: PropTypes.string.isRequired,
     duration: PropTypes.number.isRequired,
     isActive: PropTypes.bool.isRequired,
-    setIsExamEditor : PropTypes.func.isRequired,
-    setIsExamCreator : PropTypes.func.isRequired,
     courseId : PropTypes.number,
     examId : PropTypes.number
 }

@@ -28,14 +28,23 @@ const ExamsViewer = ({rawData, courseId}) => {
 
     const navigate = useNavigate()
 
-    const {setIsLoading, setModal} = useGlobalContext()
+    const {setIsLoading, setModal, setIsZViewer} = useGlobalContext()
 
-    const [isExamCreator, setIsExamCreator] = useState(false)
-
-    const [isExamEditor, setIsExamEditor] = useState(false)
 
     const createExamHandler = () => {
-        setIsExamCreator(true)
+        setIsZViewer({
+            isActive: true,
+            children: (
+                <ExamCreatorComponent 
+                type={'creator'}
+                name={''}
+                description={''}
+                duration={0}
+                isActive={false}
+                courseId = {courseId}
+                />
+            )
+        })
     }
 
 
@@ -55,7 +64,19 @@ const ExamsViewer = ({rawData, courseId}) => {
             isActive : item.is_active,
             id : item.id
         })
-        setIsExamEditor(true)
+        setIsZViewer({
+            isActive: true,
+            children: (
+                <ExamCreatorComponent 
+                    type={'editor'}
+                    name={examToEditData.name}
+                    description={examToEditData.description}
+                    duration={examToEditData.duration}
+                    isActive={examToEditData.isActive}
+                    examId={examToEditData.id}
+                />
+            )
+        })
     }
 
     const [isExamEliminator, setIsExamEliminator] = useState(false)
@@ -133,33 +154,6 @@ const ExamsViewer = ({rawData, courseId}) => {
 
     return (
         <section className="text-slate-300 mt-0 flex-col font-satoshi-blackitalic w-full">
-            {
-                isExamCreator &&
-                <ExamCreatorComponent 
-                    type={'creator'}
-                    name={''}
-                    description={''}
-                    duration={0}
-                    isActive={false}
-                    setIsExamCreator= {setIsExamCreator}
-                    setIsExamEditor={setIsExamEditor}
-                    courseId = {courseId}
-                />
-            }
-
-            {
-                isExamEditor &&
-                <ExamCreatorComponent 
-                    type={'editor'}
-                    name={examToEditData.name}
-                    description={examToEditData.description}
-                    duration={examToEditData.duration}
-                    isActive={examToEditData.isActive}
-                    examId={examToEditData.id}
-                    setIsExamCreator= {setIsExamCreator}
-                    setIsExamEditor={setIsExamEditor}
-                />
-            }
 
             {
                 isExamEliminator &&
@@ -182,7 +176,7 @@ const ExamsViewer = ({rawData, courseId}) => {
                 </h2>
                 {data.length === 0 ? (
                     <h2 className="text-center py-5 px-10 text-3xl font-thin text-slate-400 font-satoshi-lightitalic">
-                        You haven't exams in this course yet, please create a new exam.
+                        {"You haven't exams in this course yet, please create a new exam."}
                     </h2>
                 ) : (
                     data.map((item) => {
