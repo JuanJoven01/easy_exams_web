@@ -14,7 +14,6 @@ const ShortLong = () => {
 
     const {setShowedQuestion, questionsAData, showedQuestion, setAnswersData, answersData} =  useAttemptContext()
     useEffect(()=>{
-        
         if (answersData.length !=0){
             const index = answersData.findIndex((item)=> (item.question_id == questionsAData[showedQuestion].id))
             if (index != -1){
@@ -169,6 +168,7 @@ const ShortLong = () => {
                             } else {
                                 createSLAnswer()
                             }
+                            setShowedQuestion(0)
                         }}
                     />
                 </div>

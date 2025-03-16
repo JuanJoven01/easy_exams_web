@@ -204,6 +204,7 @@ const Pairing = () => {
                             } else {
                                 createPairAnswer()
                             }
+                            setShowedQuestion(0)
                         }}
                     />
                 </div>

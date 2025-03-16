@@ -28,13 +28,15 @@ const MultipleChoice = () => {
     }
 
     useEffect(()=>{
-        
+        setChangeWitness(false)
         if (answersData.length !=0){
             const index = answersData.findIndex((item)=> (item.question_id == questionsAData[showedQuestion].id))
             if (index != -1){
                 setChecked(answersData[index].selected_options[0].question_option_id)
                 setAnswerId(answersData[index].id)
-                return
+            } else {
+                setAnswerId(false)
+                setChecked(false)
             }
         }
 
@@ -176,6 +178,7 @@ const MultipleChoice = () => {
                             } else {
                                 createMCAnswer()
                             }
+                            setShowedQuestion(0)
                         }}
                     />
                 </div>

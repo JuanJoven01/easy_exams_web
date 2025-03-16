@@ -183,6 +183,7 @@ const FillInTheBlank = () => {
                             } else {
                                 createFTBAnswer()
                             }
+                            setShowedQuestion(0)
                         }}
                     />
                 </div>
