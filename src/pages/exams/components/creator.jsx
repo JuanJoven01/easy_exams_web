@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import { createExamAPI, updateExamAPI } from '../services/exams';
 
-const ExamsCreatorComponent = ({type, name, description, duration, isActive, setIsExamCreator, examId, courseId}) => {
+const ExamsCreatorComponent = ({type, name, description, duration, isActive, setIsExamCreator, setIsExamEditor, examId, courseId}) => {
 
     const authInfo = localStorage.getItem('easyAppsLogin')
     const jsonInfo = JSON.parse(authInfo)
@@ -46,6 +46,7 @@ const ExamsCreatorComponent = ({type, name, description, duration, isActive, set
 
     const closeModalHandler = () => {
         setIsExamCreator(false)
+        setIsExamEditor(false)
     }
 
     // Validate if passwords match
@@ -228,6 +229,7 @@ ExamsCreatorComponent.propTypes = {
     description: PropTypes.string.isRequired,
     duration: PropTypes.number.isRequired,
     isActive: PropTypes.bool.isRequired,
+    setIsExamEditor : PropTypes.func.isRequired,
     setIsExamCreator : PropTypes.func.isRequired,
     courseId : PropTypes.number,
     examId : PropTypes.number

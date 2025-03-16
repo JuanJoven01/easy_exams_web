@@ -142,6 +142,7 @@ const ExamsViewer = ({rawData, courseId}) => {
                     duration={0}
                     isActive={false}
                     setIsExamCreator= {setIsExamCreator}
+                    setIsExamEditor={setIsExamEditor}
                     courseId = {courseId}
                 />
             }
@@ -156,6 +157,7 @@ const ExamsViewer = ({rawData, courseId}) => {
                     isActive={examToEditData.isActive}
                     examId={examToEditData.id}
                     setIsExamCreator= {setIsExamCreator}
+                    setIsExamEditor={setIsExamEditor}
                 />
             }
 

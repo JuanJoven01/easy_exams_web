@@ -57,8 +57,6 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
 
     const getAnswerIndex = (answer,questions) => {
         const index = questions.findIndex((element) => element.id == answer.question_id)
-        console.log('index')
-        console.log(index)
         return index
 
     }
@@ -157,7 +155,10 @@ const ShowAttemptsComponent = ({questions, attempts}) => {
                     ))
                 }
                 
-                <ReactTooltip id='attempts' place="top" type="dark" effect="solid" />
+                <ReactTooltip id='attempts' place="top" type="dark" effect="solid"
+                style={{
+                    maxWidth: '300px'
+                }} />
             </section>
         </section>
     )
