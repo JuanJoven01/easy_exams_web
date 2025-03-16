@@ -127,7 +127,7 @@ const Pairing = () => {
     return(
 
         <div className='w-full'>
-            <p className='text-slate-300 font-bold'>{questionsAData[showedQuestion].content}</p>
+            <p className='text-slate-300 font-bold'>{`${showedQuestion +1}) ${questionsAData[showedQuestion].content}`}</p>
             <form>
                 <p className='py-2 px-5 '>This is a matching question, select the match for any pair:</p>
                 {

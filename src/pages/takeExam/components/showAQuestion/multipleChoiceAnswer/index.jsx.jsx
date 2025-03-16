@@ -21,7 +21,6 @@ const MultipleChoice = () => {
     const [answerId, setAnswerId] = useState(false)
 
     const {questionsAData, showedQuestion, setShowedQuestion, setAnswersData, answersData } = useAttemptContext()
-
     const handleChecked = (id) => {
         if(!changeWitness){
             setChangeWitness(true)}
@@ -104,7 +103,7 @@ const MultipleChoice = () => {
     return(
 
         <div className='w-full'>
-            <p className='text-slate-300 font-bold'>{questionsAData[showedQuestion].content}</p>
+            <p className='text-slate-300 font-bold'>{`${showedQuestion +1}) ${questionsAData[showedQuestion].content}`}</p>
             <div className='flex items-center'>
                 <div className='mb-2 w-full'>
                     <p className=" py-2 px-5 ">

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import {  useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import useGlobalContext from '../../../../../context/GlobalContext/useGlobalContext';
 import useAttemptContext from '../../../../../context/AttemptContext/useAttemptContext';
@@ -51,7 +50,7 @@ const FillInTheBlank = () => {
             }));
             setOption(newOptions);
         }
-        setContent(cleanedContent);
+        setContent(`${showedQuestion +1}) ${cleanedContent}`);
 
         if (answersData.length !=0){
             const index = answersData.findIndex((item)=> (item.question_id == questionsAData[showedQuestion].id))

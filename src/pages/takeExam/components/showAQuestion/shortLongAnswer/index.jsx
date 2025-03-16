@@ -13,7 +13,6 @@ import useAttemptContext from '../../../../../context/AttemptContext/useAttemptC
 const ShortLong = () => {
 
     const {setShowedQuestion, questionsAData, showedQuestion, setAnswersData, answersData} =  useAttemptContext()
-
     useEffect(()=>{
         
         if (answersData.length !=0){
@@ -98,7 +97,7 @@ const ShortLong = () => {
     return(
 
         <div className='w-full'>
-            <p className='text-slate-300 font-bold'>{questionsAData[showedQuestion].content}</p>
+            <p className='text-slate-300 font-bold'>{`${showedQuestion +1}) ${questionsAData[showedQuestion].content}`}</p>
             <form className='flex items-center my-5'>
                 <label htmlFor="userAns" className="py-2 px-5 ">
                     Your Answer:
