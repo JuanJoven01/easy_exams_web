@@ -178,7 +178,13 @@ const FillInTheBlank = () => {
                 (showedQuestion == (questionsAData.length -1)) &&
                 <div className='ml-2'>
                     <CustomFinishButton
-                        
+                        action={()=>{
+                            if (answerId){
+                                updateFTBAnswer()
+                            } else {
+                                createFTBAnswer()
+                            }
+                        }}
                     />
                 </div>
             }

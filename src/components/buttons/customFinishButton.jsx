@@ -1,11 +1,12 @@
-
+import PropTypes from 'prop-types'
 import { finishAttemptAPI } from '../../pages/takeExam/services/index.'
 import useGlobalContext from '../../context/GlobalContext/useGlobalContext'
 import { useNavigate } from 'react-router'
-const CustomFinishButton = () => {
+const CustomFinishButton = ({action}) => {
     const navigate = useNavigate()
     const {setIsLoading, setModal} = useGlobalContext()
     const finishExam = async () => {
+        action()
         setIsLoading(true)
         const response = await finishAttemptAPI()
         if (response.status == 'error'){
@@ -39,6 +40,10 @@ const CustomFinishButton = () => {
             </div>
         </div>
     )
+}
+
+CustomFinishButton.propTypes = {
+    action : PropTypes.func.isRequired
 }
 
 export default CustomFinishButton

@@ -164,7 +164,13 @@ const ShortLong = () => {
                 (showedQuestion == (questionsAData.length -1)) &&
                 <div className='ml-2'>
                     <CustomFinishButton
-                        
+                        action={()=>{
+                            if (answerId){
+                                updateSLAnswer()
+                            } else {
+                                createSLAnswer()
+                            }
+                        }}
                     />
                 </div>
             }
