@@ -36,6 +36,7 @@ const FillInTheBlank = () => {
     }
 
     useEffect(() => {
+        setChangeWitness(false)
         if (!questionsAData[showedQuestion]?.content) return;
         const regex = /\{\{(.*?)\}\}/g;
         let _counter = 1;
@@ -43,24 +44,28 @@ const FillInTheBlank = () => {
             regex,
             () => `<span class="text-echo">____${_counter++}____</span>`
         );
-        if (options.length === 0) {
-            const newOptions = Array.from({ length: _counter - 1 }, (_, i) => ({
-                id: i + 1,
-                value: ''
-            }));
-            setOption(newOptions);
-        }
-        setContent(`${showedQuestion +1}) ${cleanedContent}`);
-
         if (answersData.length !=0){
             const index = answersData.findIndex((item)=> (item.question_id == questionsAData[showedQuestion].id))
             if (index != -1){
                 setOption(JSON.parse(answersData[index].answer_text))
                 setAnswerId(answersData[index].id)
-                return
+            } else{
+                setAnswerId(false)
+                const newOptions = Array.from({ length: _counter - 1 }, (_, i) => ({
+                id: i + 1,
+                value: ''
+                }));
+                setOption(newOptions);
             }
+        } else{
+            setAnswerId(false)
+                const newOptions = Array.from({ length: _counter - 1 }, (_, i) => ({
+                id: i + 1,
+                value: ''
+                }));
+                setOption(newOptions);
         }
-        
+        setContent(`${showedQuestion +1}) ${cleanedContent}`);
     }, [questionsAData, showedQuestion, options.length, answersData]);
 
     const createFTBAnswer =async ()=>{
