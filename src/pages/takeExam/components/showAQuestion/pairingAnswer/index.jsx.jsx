@@ -22,6 +22,8 @@ const Pairing = () => {
     const [answerId, setAnswerId] = useState(false)
 
     useEffect(() => {
+        setChangeWitness(false)
+        setAnswerId(false)
         if (!questionsAData[showedQuestion]?.pairs) return;
         let newMatches = questionsAData[showedQuestion].pairs.map((pair) => ({
             ...pair,
